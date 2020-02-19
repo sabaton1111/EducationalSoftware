@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EducationalSoftware.Models
 {
-    public class User
+    public abstract class User
     {
         #region Datamembers
 
