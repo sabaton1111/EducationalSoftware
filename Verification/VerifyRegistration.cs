@@ -22,7 +22,7 @@ namespace EducationalSoftware.Verification
             using (MySqlConnection connection = new MySqlConnection("server=sql2.freemysqlhosting.net;port=3306;database=sql2323477;user=sql2323477;password=zS1!nT9!;"))
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT email FROM user",connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT email FROM user", connection);
                 cmd.Connection = connection;
                 using (IDataReader dataReader = cmd.ExecuteReader())
                 {
@@ -36,7 +36,7 @@ namespace EducationalSoftware.Verification
         }
         public bool VerifyName(string name)
         {
-            if(Regex.IsMatch(name, @"^[\p{L}]+$") == false)
+            if (Regex.IsMatch(name, @"^[\p{L}]+$") == false || string.IsNullOrEmpty(name) == true)
             {
                 return false;
             }

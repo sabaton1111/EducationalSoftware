@@ -9,6 +9,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using EducationalSoftware.Fragments;
+using EducationalSoftware.Extensions;
 namespace EducationalSoftware
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
@@ -35,21 +36,23 @@ namespace EducationalSoftware
 
 
             Fragment fragmentLogin = new LoginFragment();
-            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, fragmentLogin).AddToBackStack(null).Commit();
+            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, fragmentLogin).Commit();
 
         }
 
         public override void OnBackPressed()
         {
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            if (drawer.IsDrawerOpen(GravityCompat.Start))
+            PopupWindow popup = new PopupWindow();
+            if (FragmentManager.BackStackEntryCount < 1)
             {
-                drawer.CloseDrawer(GravityCompat.Start);
+                popup.OnExitAlert("Msg", "Are you sure you want to exit?", this);
             }
             else
             {
                 base.OnBackPressed();
             }
+            
+           
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
