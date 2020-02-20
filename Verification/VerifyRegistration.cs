@@ -24,7 +24,7 @@ namespace EducationalSoftware.Verification
         private FirebaseHelper helper = new FirebaseHelper();
         FirebaseClient client = new FirebaseClient("https://educationalsoftware-ba7e4.firebaseio.com/");
 
-    
+
         public bool VerifyName(string name)
         {
             if (Regex.IsMatch(name, @"^[\p{L}]+$") == false || string.IsNullOrEmpty(name) == true)
@@ -36,10 +36,9 @@ namespace EducationalSoftware.Verification
                 return true;
             }
         }
-
         public bool VerifyEmail(string email)
         {
-           
+
             // bool result = await helper.GetEmailAddresses()
             if (helper.GetEmail(email).GetAwaiter().GetResult() == false)
             {
@@ -56,7 +55,47 @@ namespace EducationalSoftware.Verification
             {
                 return false;
             }
-            
+
+        }
+        public int VerifyPassword(string password, string repeatPassword)
+        {
+
+            if (password.Length < 6 || password.Length > 20)
+            {
+                return 0;
+            }
+            else if (!password.Any(ch => char.IsUpper(ch)) || !password.Any(ch => char.IsDigit(ch)) || !password.Any(ch => char.IsLower(ch)))
+            {
+                return 1;
+            }
+            else if (password.Contains('<') || password.Contains('>') || password.Contains(';') ||
+                    password.Contains('\\') || password.Contains('{') || password.Contains('}') ||
+                    password.Contains('[') || password.Contains(']') || password.Contains('+') ||
+                    password.Contains(',') || password.Contains('?') || password.Contains('\'') ||
+                    password.Contains('\"') || password.Contains('`') || password.Contains(':'))
+            {
+                return 2;
+            }
+            else if (password.Contains(' ') || password.Contains('\t') || password.Contains('\n'))
+            {
+                return 3;
+            }
+            else if (string.Equals(password, repeatPassword) == false)
+            {
+                return 4;
+            }
+            else
+            {
+                return 5;
+            }
+        }
+        public bool VerifyAge(short age)
+        {
+            if (age < 10 || age > 120)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

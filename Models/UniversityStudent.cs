@@ -26,8 +26,8 @@ namespace EducationalSoftware.Models
         public string City { get; set; }
         public string Country { get; set; }
 
-        public UniversityStudent(string firstName, string lastName, string email, short age, string speciality, int course, string universityName,
-            string city, string country) : base(firstName, lastName, email, age)
+        public UniversityStudent(string firstName, string lastName, string email, string password, short age, string speciality, int course, string universityName,
+            string city, string country) : base(firstName, lastName, email, password, age)
         {
             Speciality = speciality;
             Course = course;
@@ -36,9 +36,10 @@ namespace EducationalSoftware.Models
             Country = country;
         }
 
-        public UniversityStudent() : this("Empty", "Empty", "Empty", 0, "Empty", 0, "Empty", "Empty", "Empty") { }
+        public UniversityStudent() : this("Empty", "Empty", "Empty", "Empty", 0, "Empty", 0, "Empty", "Empty", "Empty") { }
         public UniversityStudent(UniversityStudent universityStudent) : this(universityStudent.FirstName, universityStudent.LastName,
-            universityStudent.Email, universityStudent.Age, universityStudent.speciality, universityStudent.course, universityStudent.universityName,
-            universityStudent.city, universityStudent.country) { }
+            universityStudent.Email, universityStudent.Password, universityStudent.Age, universityStudent.speciality,
+            universityStudent.course, universityStudent.universityName, universityStudent.city, universityStudent.country)
+        { }
     }
 }

@@ -24,8 +24,8 @@ namespace EducationalSoftware.Models
         public string City { get; set; }
         public string Country { get; set; }
 
-        public SchoolStudent(string firstName, string lastName, string email, short age, int classInSchool, string schoolName,
-            string city, string country) : base(firstName, lastName, email, age)
+        public SchoolStudent(string firstName, string lastName, string email, string password, short age,
+            int classInSchool, string schoolName, string city, string country) : base(firstName, lastName, email, password, age)
         {
             ClassInSchool = classInSchool;
             SchoolName = schoolName;
@@ -33,10 +33,12 @@ namespace EducationalSoftware.Models
             Country = country;
         }
 
-        public SchoolStudent() : this("Empty", "Empty", "Empty", 0, 0, "Empty", "Empty", "Empty") { }
+        public SchoolStudent() : this("Empty", "Empty", "Empty", "Empty", 0, 0, "Empty", "Empty", "Empty") { }
 
-        public SchoolStudent(SchoolStudent schoolStudent):this(schoolStudent.FirstName, schoolStudent.LastName, schoolStudent.Email,
-            schoolStudent.Age, schoolStudent.classInSchool, schoolStudent.schoolName, schoolStudent.city, schoolStudent.country) { }
+        public SchoolStudent(SchoolStudent schoolStudent) : this(schoolStudent.FirstName, schoolStudent.LastName,
+            schoolStudent.Email, schoolStudent.Password, schoolStudent.Age, schoolStudent.classInSchool,
+            schoolStudent.schoolName, schoolStudent.city, schoolStudent.country)
+        { }
 
     }
 }

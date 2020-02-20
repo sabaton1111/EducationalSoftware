@@ -20,15 +20,17 @@ namespace EducationalSoftware.Models
         public List<string> Subjects { get; set; }
         public string Institution { get; set; }
 
-        public Teacher(string firstName, string lastName, string email, short age, List<string> subjects, string institution) : base(firstName,
-            lastName, email, age)
+        public Teacher(string firstName, string lastName, string email, string password, short age,
+            List<string> subjects, string institution) : base(firstName, lastName, email, password, age)
         {
             Subjects = subjects;
             Institution = institution;
         }
 
-        public Teacher() : this("Empty", "Empty", "Empty", 0, null, "Empty") { }
+        public Teacher() : this("Empty", "Empty", "Empty", "Empty", 0, null, "Empty") { }
 
-        public Teacher(Teacher teacher) : this(teacher.FirstName, teacher.LastName, teacher.Email, teacher.Age, teacher.subjects, teacher.institution) { }
+        public Teacher(Teacher teacher) : this(teacher.FirstName, teacher.LastName, teacher.Email,
+            teacher.Password, teacher.Age, teacher.subjects, teacher.institution)
+        { }
     }
 }

@@ -67,8 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Extensions\Encryption.cs" />
     <Compile Include="Extensions\FirebaseHelper.cs" />
     <Compile Include="Extensions\PopupWindow.cs" />
+    <Compile Include="Fragments\HomeFragment.cs" />
     <Compile Include="Fragments\LoginFragment.cs" />
     <Compile Include="Fragments\RegisterFragment.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -162,6 +164,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_login.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_home.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

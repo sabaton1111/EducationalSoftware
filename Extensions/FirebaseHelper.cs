@@ -22,14 +22,16 @@ namespace EducationalSoftware.Extensions
                     FirstName = item.Object.FirstName,
                     LastName = item.Object.LastName,
                     Email = item.Object.Email,
+                    Password = item.Object.Password,
                     Age = item.Object.Age
                 }).ToList();
         }
-        public async Task AddUser(string firstName, string lastName, string email, short age)
+        public async Task AddUser(string firstName, string lastName, string email, string password, short age)
         {
             await client
                 .Child("Users")
-                .PostAsync(new User { FirstName = firstName, LastName = lastName, Email = email, Age = age });
+                .PostAsync(new User { FirstName = firstName, LastName = lastName, Email = email, Password = password,
+                    Age = age });
         }
 
         public async Task<User> GetUser(string email)
@@ -68,7 +70,7 @@ namespace EducationalSoftware.Extensions
 
         }
 
-        public async Task UpdatePerson(string firstName, string lastName, string email, short age)
+        public async Task UpdatePerson(string firstName, string lastName, string email, string password, short age)
         {
             var toUpdateUser = (await client
               .Child("Users")
@@ -77,7 +79,8 @@ namespace EducationalSoftware.Extensions
             await client
               .Child("Users")
               .Child(toUpdateUser.Key)
-              .PutAsync(new User() { FirstName = firstName, LastName = lastName, Email = email, Age = age });
+              .PutAsync(new User() { FirstName = firstName, LastName = lastName, Email = email, Password = password,
+                  Age = age });
         }
 
         public async Task DeletePerson(string email)
