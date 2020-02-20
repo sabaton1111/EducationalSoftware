@@ -16,8 +16,6 @@ namespace EducationalSoftware.Fragments
     [Obsolete]
     public class LoginFragment : Fragment
     {
-
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = inflater.Inflate(Resource.Layout.fragment_login, container, false);
@@ -26,7 +24,6 @@ namespace EducationalSoftware.Fragments
             {
                 Fragment registerFragment = new RegisterFragment();
                 FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerFragment).AddToBackStack(null).Commit();
-                
             };
             return view;    
         }

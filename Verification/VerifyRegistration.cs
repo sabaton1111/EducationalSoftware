@@ -12,28 +12,19 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Forms;
+using EducationalSoftware.Extensions;
+using EducationalSoftware.Models;
+using Firebase.Database;
+using System.Threading.Tasks;
+
 namespace EducationalSoftware.Verification
 {
     public class VerifyRegistration
     {
-        private List<string> GetEmailAddresses()
-        {
-            List<string> emailAddresses = new List<string>();
-            using (MySqlConnection connection = new MySqlConnection("server=sql2.freemysqlhosting.net;port=3306;database=sql2323477;user=sql2323477;password=zS1!nT9!;"))
-            {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT email FROM user", connection);
-                cmd.Connection = connection;
-                using (IDataReader dataReader = cmd.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        emailAddresses.Add(Convert.ToString(dataReader["email"]));
-                    }
-                }
-            }
-            return emailAddresses;
-        }
+        private FirebaseHelper helper = new FirebaseHelper();
+        FirebaseClient client = new FirebaseClient("https://educationalsoftware-ba7e4.firebaseio.com/");
+
+    
         public bool VerifyName(string name)
         {
             if (Regex.IsMatch(name, @"^[\p{L}]+$") == false || string.IsNullOrEmpty(name) == true)
@@ -48,7 +39,9 @@ namespace EducationalSoftware.Verification
 
         public bool VerifyEmail(string email)
         {
-            if (GetEmailAddresses().Contains(email) == true)
+           
+            // bool result = await helper.GetEmailAddresses()
+            if (helper.GetEmail(email).GetAwaiter().GetResult() == false)
             {
                 return false;
             }
@@ -63,6 +56,7 @@ namespace EducationalSoftware.Verification
             {
                 return false;
             }
+            
         }
     }
 }
