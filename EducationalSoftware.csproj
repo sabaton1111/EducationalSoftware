@@ -72,9 +72,12 @@
     <Compile Include="Extensions\PopupWindow.cs" />
     <Compile Include="Fragments\HomeFragment.cs" />
     <Compile Include="Fragments\LoginFragment.cs" />
-    <Compile Include="Fragments\RegisterFragment.cs" />
+    <Compile Include="Fragments\RegisterOtherFragment.cs" />
+    <Compile Include="Fragments\RegistrationTypeFragment.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Guest.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\RegistrationRequest.cs" />
     <Compile Include="Models\SchoolStudent.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\UniversityStudent.cs" />
@@ -169,6 +172,45 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_home.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_registration_type.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_border.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\owl_other.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\owl_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\owl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_register_teacher.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

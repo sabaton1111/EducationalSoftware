@@ -7,38 +7,46 @@ using Android.Widget;
 using EducationalSoftware.Verification;
 using EducationalSoftware.Extensions;
 using System.Text;
-
+using EducationalSoftware.Models;
 namespace EducationalSoftware.Fragments
 {
-    public class RegisterFragment : Fragment
+    public class RegisterOtherFragment : Fragment
     {
-        
+        #region Data members
         private VerifyRegistration verify = new VerifyRegistration();
-        private Aes aes = Aes.Create();
-        private byte[] encryptedPassword;
         private Encryption encryption = new Encryption();
         private Extensions.PopupWindow alertWindow = new Extensions.PopupWindow();
         private EditText etFirstName, etLastName, etEmail, etPassword, etRepeatPassword, etAge;
         private Android.Widget.Button btnRegister;
         private FirebaseHelper firebaseHelper = new FirebaseHelper();
-
+        #endregion
         public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register, container, false);
+            var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
+           Android.Provider.Settings.Secure.AndroidId);
+            RegistrationRequest req = firebaseHelper.GetRequest(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (req.Token == "User")
+            {
+                Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register, container, false);
+                //Initializing editText boxes and register button
+                etFirstName = view.FindViewById<EditText>(Resource.Id.editTextFirstName);
+                etLastName = view.FindViewById<EditText>(Resource.Id.editTextLastName);
+                etEmail = view.FindViewById<EditText>(Resource.Id.editTextEmail);
+                etPassword = view.FindViewById<EditText>(Resource.Id.editTextPassword);
+                etRepeatPassword = view.FindViewById<EditText>(Resource.Id.editTextRepeatPassword);
+                etAge = view.FindViewById<EditText>(Resource.Id.editTextAge);
 
-            //Initializing editText boxes and register button
-            etFirstName = view.FindViewById<EditText>(Resource.Id.editTextFirstName);
-            etLastName = view.FindViewById<EditText>(Resource.Id.editTextLastName);
-            etEmail = view.FindViewById<EditText>(Resource.Id.editTextEmail);
-            etPassword = view.FindViewById<EditText>(Resource.Id.editTextPassword);
-            etRepeatPassword = view.FindViewById<EditText>(Resource.Id.editTextRepeatPassword);
-            etAge = view.FindViewById<EditText>(Resource.Id.editTextAge);
+                btnRegister = view.FindViewById<Android.Widget.Button>(Resource.Id.btnRegisterUser);
+                btnRegister.Click += AddUser_Click;
+                return view;
+            }
+            else
+            {
+                Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_teacher, container, false);
+                return view;
+            }
 
-            btnRegister = view.FindViewById<Android.Widget.Button>(Resource.Id.btnRegisterUser);
-            btnRegister.Click += AddUser_Click;
-            return view;
         }
-
         private async void AddUser_Click(object sender, EventArgs e)
         {
             #region Verify data
@@ -106,12 +114,13 @@ namespace EducationalSoftware.Fragments
             {
                 alertWindow.Alert("Error!", "Age must be between 10 and 120!", Activity);
                 return;
-            } 
+            }
             #endregion
 
             #endregion
 
             await firebaseHelper.AddUser(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+            await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "User");
             alertWindow.Alert("Message", "Successful registration", Activity);
 
             Fragment loginFragment = new LoginFragment();

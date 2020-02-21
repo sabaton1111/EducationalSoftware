@@ -1,53 +1,65 @@
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px"
     android:background="#FFFFFF">
+
+    <ImageView
+        android:src="@mipmap/logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/imageView1" />
     <EditText
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email address"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:hint="@string/email"
         android:textAlignment="center"
         android:id="@+id/editTextEmail" />
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/password"
         android:layout_below="@id/editTextEmail"
         android:textAlignment="center"
         android:id="@+id/editTextPassword" />
 
     <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
+        android:text="@string/login"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/editTextPassword"
-        android:layout_alignStart="@id/editTextPassword"
-
-        android:id="@+id/btnRegister"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_border"
+        android:textColor="#ff6600"
+        android:id="@+id/btnLogin"/>
     <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
+        android:text="@string/register"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+          android:textColor="#ff6600"
+       
         android:layout_centerInParent="true"
-        android:layout_toRightOf="@id/btnRegister"
-        android:layout_below="@id/editTextPassword"
-        android:layout_alignEnd="@id/editTextPassword"
-        android:id="@+id/btnLogin"
+         android:background="@drawable/button_border"
+       
+        android:id="@+id/btnRegister"
         />
-    <EditText
-        android:inputType="textPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/editTextEmail"
-        android:id="@+id/editText1" />
 
 
 
-</RelativeLayout>
+</LinearLayout>

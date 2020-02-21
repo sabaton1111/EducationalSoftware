@@ -10,9 +10,11 @@ using Android.Support.V7.App;
 using Android.Views;
 using EducationalSoftware.Fragments;
 using EducationalSoftware.Extensions;
+using Android.Content.PM;
+
 namespace EducationalSoftware
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, Icon ="@mipmap/logo")]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
 

@@ -39,7 +39,7 @@ namespace EducationalSoftware.Fragments
 
         private void OnRegister_Click(object sender, EventArgs e)
         {
-            Fragment registerFragment = new RegisterFragment();
+            Fragment registerFragment = new RegistrationTypeFragment();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerFragment).AddToBackStack(null).Commit();
         }
 
@@ -47,8 +47,9 @@ namespace EducationalSoftware.Fragments
         {
             try
             {
-                User user = firebaseHelper.GetUser(etEmail.Text).ConfigureAwait(false).GetAwaiter().GetResult();
-                if (encryption.DecodeServerName(user.Password) == etPassword.Text)
+                Login login = firebaseHelper.GetLogin(etEmail.Text).ConfigureAwait(false).GetAwaiter().GetResult();
+                //User user = firebaseHelper.GetUser(etEmail.Text).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (encryption.DecodeServerName(login.Password) == etPassword.Text)
                 {
 
                     Fragment homeFragment = new HomeFragment();
