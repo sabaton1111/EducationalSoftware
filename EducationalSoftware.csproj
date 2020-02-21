@@ -72,7 +72,7 @@
     <Compile Include="Extensions\PopupWindow.cs" />
     <Compile Include="Fragments\HomeFragment.cs" />
     <Compile Include="Fragments\LoginFragment.cs" />
-    <Compile Include="Fragments\RegisterOtherFragment.cs" />
+    <Compile Include="Fragments\RegisterFragment.cs" />
     <Compile Include="Fragments\RegistrationTypeFragment.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Guest.cs" />
@@ -211,6 +211,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_register_teacher.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_register_admin.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_register_university_student.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_register_school_student.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

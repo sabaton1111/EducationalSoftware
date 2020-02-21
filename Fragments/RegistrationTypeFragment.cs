@@ -16,6 +16,8 @@ namespace EducationalSoftware.Fragments
         private Button btnNext;
         private FirebaseHelper firebaseHelper = new FirebaseHelper();
         private Extensions.PopupWindow alertWindow = new Extensions.PopupWindow();
+        private RegistrationRequest request = new RegistrationRequest();
+        private bool exceptionCheck = true;
         #endregion
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -28,7 +30,7 @@ namespace EducationalSoftware.Fragments
             rbtnSchoolStudent = view.FindViewById<RadioButton>(Resource.Id.radioButtonScoolStudent);
             rbtnTeacher = view.FindViewById<RadioButton>(Resource.Id.radioButtonTeacher);
             rbtnUniversityStudent = view.FindViewById<RadioButton>(Resource.Id.radioButtonUniversityStudent);
-            rbtnOther = view.FindViewById<RadioButton>(Resource.Id.radioButtonOther); 
+            rbtnOther = view.FindViewById<RadioButton>(Resource.Id.radioButtonOther);
             #endregion
 
             btnNext.Click += BtnNext_Click;
@@ -39,94 +41,75 @@ namespace EducationalSoftware.Fragments
         {
             var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
             Android.Provider.Settings.Secure.AndroidId);
-            RegistrationRequest request = new RegistrationRequest();
-            bool check = true;
             try
             {
                 request = firebaseHelper.GetRequest(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
-
             }
             catch
             {
-                check = false;
+                exceptionCheck = false;
             }
+            #region Tokens to db
 
             if (rbtnAdmin.Checked == true)
             {
-                if(check == true)
+                if (exceptionCheck == true)
                 {
                     await firebaseHelper.UpdateRequest(androidID, "Admin");
                 }
                 else
                 {
                     await firebaseHelper.AddRequest(androidID, "Admin");
-
                 }
-                
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
-
             }
-            else if(rbtnSchoolStudent.Checked)
+            else if (rbtnSchoolStudent.Checked)
             {
-                if (check == true)
+                if (exceptionCheck == true)
                 {
                     await firebaseHelper.UpdateRequest(androidID, "SchoolStudent");
                 }
                 else
                 {
                     await firebaseHelper.AddRequest(androidID, "SchoolStudent");
-
                 }
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
-
             }
-            else if(rbtnTeacher.Checked)
+            else if (rbtnTeacher.Checked)
             {
-                if (check == true)
+                if (exceptionCheck == true)
                 {
                     await firebaseHelper.UpdateRequest(androidID, "Teacher");
                 }
                 else
                 {
                     await firebaseHelper.AddRequest(androidID, "Teacher");
-
                 }
-                //Fragment registerTeacher = new RegisterTeacherFragment();
-                //FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerTeacher).Commit();
-
             }
-            else if(rbtnUniversityStudent.Checked)
+            else if (rbtnUniversityStudent.Checked)
             {
-                if (check == true)
+                if (exceptionCheck == true)
                 {
                     await firebaseHelper.UpdateRequest(androidID, "UniversityStudent");
                 }
                 else
                 {
                     await firebaseHelper.AddRequest(androidID, "UniversityStudent");
-
                 }
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
-
             }
             else
             {
-                if (check == true)
+                if (exceptionCheck == true)
                 {
                     await firebaseHelper.UpdateRequest(androidID, "User");
                 }
                 else
                 {
                     await firebaseHelper.AddRequest(androidID, "User");
-
                 }
-                Fragment registerOtherFragment = new RegisterOtherFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).Commit();
+            } 
+            #endregion
 
-            }
+            Fragment registerOtherFragment = new RegisterFragment();
+            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).Commit();
 
         }
 

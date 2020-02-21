@@ -25,7 +25,17 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherFirstName"
+                android:id="@+id/editTextAdminUniqueKey"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:hint="@string/key"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/editTextAdminFirstName"
                 android:inputType="text"
                 android:textAlignment="center"
                 android:hint="@string/first_name"/>
@@ -35,7 +45,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherLastName"
+                android:id="@+id/editTextAdminLastName"
                 android:inputType="text"
                 android:textAlignment="center"
                 android:hint="@string/last_name"/>
@@ -45,7 +55,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherEmail"
+                android:id="@+id/editTextAdminEmail"
                 android:inputType="textEmailAddress"
                 android:textAlignment="center"
                 android:hint="@string/email"/>
@@ -55,7 +65,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherPassword"
+                android:id="@+id/editTextAdminPassword"
                 android:inputType="textPassword"
                 android:textAlignment="center"
                 android:hint="@string/password"/>
@@ -65,36 +75,18 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherRepeatPassword"
+                android:id="@+id/editTextAdminRepeatPassword"
                 android:inputType="textPassword"
                 android:textAlignment="center"
                 android:hint="@string/repeat_password"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherSubject"
-                android:inputType="textPassword"
-                android:textAlignment="center"
-                android:hint="@string/subject"/>
+
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherInstitution"
-                android:inputType="textPassword"
-                android:textAlignment="center"
-                android:hint="@string/institution"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/editTextTeacherAge"
+                android:id="@+id/editTextAdminAge"
                 android:inputType="number"
                 android:textAlignment="center"
                 android:hint="@string/age"/>
@@ -108,7 +100,7 @@
                 android:layout_marginTop="40dp"
                 android:minWidth="25px"
                 android:minHeight="25px"
-                android:id="@+id/btnTeacherRegisterUser" />
+                android:id="@+id/btnAdminRegisterUser" />
 
         </LinearLayout>
 
