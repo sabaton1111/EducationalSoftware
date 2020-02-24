@@ -36,7 +36,6 @@ namespace EducationalSoftware.Fragments
             btnNext.Click += BtnNext_Click;
             return view;
         }
-
         private async void BtnNext_Click(object sender, EventArgs e)
         {
             var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
@@ -107,11 +106,8 @@ namespace EducationalSoftware.Fragments
                 }
             } 
             #endregion
-
             Fragment registerOtherFragment = new RegisterFragment();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).Commit();
-
         }
-
     }
 }

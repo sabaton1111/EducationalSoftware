@@ -15,18 +15,19 @@ namespace EducationalSoftware.Models
     public class UniversityStudent : User
     {
         private string speciality;
-        private int course;
+        private short course;
         private string universityName;
         private string city;
         private string country;
 
         public string Speciality { get; set; }
-        public int Course { get; set; }
+        public short Course { get; set; }
         public string UniversityName { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
 
-        public UniversityStudent(string firstName, string lastName, string email, string password, short age, string speciality, int course, string universityName,
+        public UniversityStudent(string firstName, string lastName, string email, string password, short age, 
+            string speciality, short course, string universityName,
             string city, string country) : base(firstName, lastName, email, password, age)
         {
             Speciality = speciality;

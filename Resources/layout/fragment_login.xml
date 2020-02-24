@@ -9,11 +9,22 @@
     android:minHeight="25px"
     android:background="#FFFFFF">
 
-    <ImageView
-        android:src="@mipmap/logo"
+    <LinearLayout
+        android:layout_height="300dp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/imageView1" />
+        android:layout_marginTop="-120dp"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:background="@mipmap/login"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            >
+        </ImageView>
+    </LinearLayout>
+
     <EditText
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
@@ -23,7 +34,7 @@
         android:layout_marginTop="50dp"
         android:hint="@string/email"
         android:textAlignment="center"
-        android:id="@+id/editTextEmail" />
+        android:id="@+id/editTextEmail"/>
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
@@ -52,11 +63,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-          android:textColor="#ff6600"
-       
+        android:textColor="#ff6600"
         android:layout_centerInParent="true"
-         android:background="@drawable/button_border"
-       
+        android:background="@drawable/button_border"
         android:id="@+id/btnRegister"
         />
 

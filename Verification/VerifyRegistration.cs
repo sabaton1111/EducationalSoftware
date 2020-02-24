@@ -23,8 +23,6 @@ namespace EducationalSoftware.Verification
     {
         private FirebaseHelper helper = new FirebaseHelper();
         FirebaseClient client = new FirebaseClient("https://educationalsoftware-ba7e4.firebaseio.com/");
-
-
         public bool VerifyName(string name)
         {
             if (Regex.IsMatch(name, @"^[\p{L}]+$") == false || string.IsNullOrEmpty(name) == true)
@@ -97,5 +95,22 @@ namespace EducationalSoftware.Verification
             }
             return true;
         }
+        public bool VerifyClass(short classInSchool)
+        {
+            if (classInSchool<0 || classInSchool > 12)
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool VerifyCourse(short course)
+        {
+            if(course < 1 || course > 6)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

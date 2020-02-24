@@ -83,11 +83,14 @@ namespace EducationalSoftware.Fragments
                 return view;
             }
 
-            else if (req.Token == "University Student")
+            else if (req.Token == "UniversityStudent")
             {
                 Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_university_student, container, false);
-                etSubject = view.FindViewById<EditText>(Resource.Id.editTextTeacherSubject);
-                etSchool = view.FindViewById<EditText>(Resource.Id.editTextTeacherInstitution);
+                etSubject = view.FindViewById<EditText>(Resource.Id.editTextUStudentSubject);
+                etSchool = view.FindViewById<EditText>(Resource.Id.editTextUStudentUniversity);
+                etClass = view.FindViewById<EditText>(Resource.Id.editTextUStudentCourse);
+                etCountry = view.FindViewById<EditText>(Resource.Id.editTextUStudentCountry);
+                etCity = view.FindViewById<EditText>(Resource.Id.editTextUStudentCity);
                 etFirstName = view.FindViewById<EditText>(Resource.Id.editTextUStudentFirstName);
                 etLastName = view.FindViewById<EditText>(Resource.Id.editTextUStudentLastName);
                 etEmail = view.FindViewById<EditText>(Resource.Id.editTextUStudentEmail);
@@ -100,7 +103,7 @@ namespace EducationalSoftware.Fragments
             }
             else
             {
-                Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_school_student, container, false);      
+                Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_school_student, container, false);
                 etSchool = view.FindViewById<EditText>(Resource.Id.editTextStudentSchool);
                 etClass = view.FindViewById<EditText>(Resource.Id.editTextStudentClass);
                 etCountry = view.FindViewById<EditText>(Resource.Id.editTextStudentCountry);
@@ -116,45 +119,24 @@ namespace EducationalSoftware.Fragments
                 return view;
             }
         }
-
-        private void BtnUStudentRegister_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BtnTeacherRegister_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BtnStudentRegister_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BtnAdminRegister_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async void AddUser_Click(object sender, EventArgs e)
+        public bool Verify()
         {
             #region Verify data
             if (verify.VerifyName(etFirstName.Text) == false)
             {
                 alertWindow.Alert("Error!", "Please enter valid First name!", Activity);
-                return;
+                return false;
             }
 
             if (verify.VerifyName(etLastName.Text) == false)
             {
                 alertWindow.Alert("Error!", "Please enter valid Last name!", Activity);
-                return;
+                return false;
             }
             if (verify.VerifyEmail(etEmail.Text) == false)
             {
                 alertWindow.Alert("Error!", "Email is wrong or already taken!", Activity);
-                return;
+                return false;
             }
             if (verify.VerifyPassword(etPassword.Text, etRepeatPassword.Text) != 5)
             {
@@ -164,27 +146,27 @@ namespace EducationalSoftware.Fragments
                     case 0:
                         {
                             alertWindow.Alert("Error!", "Password should be betweem 6 and 20 characters long!", Activity);
-                            return;
+                            return false;
                         }
                     case 1:
                         {
                             alertWindow.Alert("Error!", "Password should contain Upper letter, Lower letter and digit", Activity);
-                            return;
+                            return false;
                         }
                     case 2:
                         {
                             alertWindow.Alert("Error!", "Password contains forbidden character (<, >, ;, \\, {, }, [, ], +, ,, ?, \', \", `, : )!", Activity);
-                            return;
+                            return false;
                         }
                     case 3:
                         {
                             alertWindow.Alert("Error!", "Password cannot contain spaces", Activity);
-                            return;
+                            return false;
                         }
                     case 4:
                         {
                             alertWindow.Alert("Error!", "Password and Repeat Password not matching!", Activity);
-                            return;
+                            return false;
                         }
                 }
                 #endregion
@@ -198,25 +180,100 @@ namespace EducationalSoftware.Fragments
             catch
             {
                 alertWindow.Alert("Error!", "Field cannot be empty!", Activity);
-                return;
+                return false;
             }
             if (verify.VerifyAge(Convert.ToInt16(etAge.Text)) == false)
             {
                 alertWindow.Alert("Error!", "Age must be between 10 and 120!", Activity);
-                return;
+                return false;
             }
             #endregion
 
+            return true;
+
             #endregion
 
-            await firebaseHelper.AddUser(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
-            await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "User");
-            alertWindow.Alert("Message", "Successful registration", Activity);
-
-            Fragment loginFragment = new LoginFragment();
-            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
-
         }
+        public bool VerifyStudent()
+        {
+            if (verify.VerifyClass(Convert.ToInt16(etClass)) == false)
+            {
+                alertWindow.Alert("Error!", "Invalid class!", Activity);
+                return false;
+            }
+            if (verify.VerifyName(etCountry.Text) == false)
+            {
+                alertWindow.Alert("Error!", "Invalid country name!", Activity);
+                return false;
+            }
+            if (verify.VerifyName(etCity.Text) == false)
+            {
+                alertWindow.Alert("Error!", "Invalid city name!", Activity);
+                return false;
+            }
+            return true;
+        }
+        private async void BtnUStudentRegister_Click(object sender, EventArgs e)
+        {
+            if (Verify() == true && VerifyStudent() == true)
+            {
+                await firebaseHelper.AddUniversityStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
+                etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSchool.Text,
+                etSubject.Text, Convert.ToInt16(etClass.Text), etCountry.Text, etCity.Text, Convert.ToInt16(etAge.Text));
+                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Teacher");
+                alertWindow.Alert("Message", "Successful registration", Activity);
+                Fragment loginFragment = new LoginFragment();
+                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
 
+            }
+        }
+        private async void BtnTeacherRegister_Click(object sender, EventArgs e)
+        {
+            if (Verify() == true)
+            {
+                await firebaseHelper.AddTeacher(etFirstName.Text, etLastName.Text, etEmail.Text,
+                   etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSubject.Text, etSchool.Text, Convert.ToInt16(etAge.Text));
+                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Teacher");
+                alertWindow.Alert("Message", "Successful registration", Activity);
+
+                Fragment loginFragment = new LoginFragment();
+                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+            }
+        }
+        private async void BtnStudentRegister_Click(object sender, EventArgs e)
+        {
+            if (Verify() == true && VerifyStudent() == true)
+            {
+                await firebaseHelper.AddSchoolStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
+                etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSchool.Text,
+                Convert.ToInt16(etClass.Text), etCountry.Text, etCity.Text, Convert.ToInt16(etAge.Text));
+                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "SchoolStudent");
+                alertWindow.Alert("Message", "Successful registration", Activity);
+                Fragment loginFragment = new LoginFragment();
+                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+            }
+        }
+        private async void BtnAdminRegister_Click(object sender, EventArgs e)
+        {
+            if(Verify()==true)
+            {
+                await firebaseHelper.AddAdmin(etVerificationKey.Text, etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Admin");
+                alertWindow.Alert("Message", "Successful registration", Activity);
+                Fragment loginFragment = new LoginFragment();
+                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+            }
+        }
+        private async void AddUser_Click(object sender, EventArgs e)
+        {
+            if (Verify() == true)
+            {
+                await firebaseHelper.AddUser(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "User");
+                alertWindow.Alert("Message", "Successful registration", Activity);
+                Fragment loginFragment = new LoginFragment();
+                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+            }
+        }
     }
 }

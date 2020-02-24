@@ -14,18 +14,18 @@ namespace EducationalSoftware.Models
 {
     public class SchoolStudent : User
     {
-        private int classInSchool;
+        private short classInSchool;
         private string schoolName;
         private string city;
         private string country;
 
-        public int ClassInSchool { get; set; }
+        public short ClassInSchool { get; set; }
         public string SchoolName { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
 
         public SchoolStudent(string firstName, string lastName, string email, string password, short age,
-            int classInSchool, string schoolName, string city, string country) : base(firstName, lastName, email, password, age)
+            short classInSchool, string schoolName, string city, string country) : base(firstName, lastName, email, password, age)
         {
             ClassInSchool = classInSchool;
             SchoolName = schoolName;

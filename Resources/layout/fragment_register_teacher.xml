@@ -75,7 +75,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/editTextTeacherSubject"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:textAlignment="center"
                 android:hint="@string/subject"/>
 
@@ -85,7 +85,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/editTextTeacherInstitution"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:textAlignment="center"
                 android:hint="@string/institution"/>
 

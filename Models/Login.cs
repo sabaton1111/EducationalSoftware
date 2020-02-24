@@ -1,15 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
 namespace EducationalSoftware.Models
 {
     public class Login
@@ -26,14 +15,7 @@ namespace EducationalSoftware.Models
             Password = password;
             Token = token;
         }
-        public Login() : this("Empty", "Empty", "Empty")
-        {
-                
-        }
-
-        public Login(Login login) : this (login.Email, login.Password, login.Token)
-        {
-
-        }
+        public Login() : this("Empty", "Empty", "Empty") { }
+        public Login(Login login) : this(login.Email, login.Password, login.Token) { }
     }
 }

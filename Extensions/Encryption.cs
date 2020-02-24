@@ -11,7 +11,6 @@ namespace EducationalSoftware.Extensions
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(serverName));
         }
-
         public string DecodeServerName(string encodedServername)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(encodedServername));
