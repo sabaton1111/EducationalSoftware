@@ -19,13 +19,21 @@
   </item>
 
   <item
+  android:id="@+id/action_test"
+  android:enabled="true"
+  android:icon="@drawable/message_icon"
+  android:title="Test"
+  app:showAsAction="ifRoom">
+  </item>
+
+  <item
     android:id="@+id/action_messages"
     android:enabled="true"
     android:icon="@drawable/message_icon"
     android:title="Messages"
     app:showAsAction="ifRoom">
   </item>
-  
+
   <item
     android:id="@+id/action_settings"
     android:enabled="true"
@@ -33,5 +41,7 @@
     android:title="Settings"
     app:showAsAction="ifRoom">
   </item>
+
+
 
 </menu>

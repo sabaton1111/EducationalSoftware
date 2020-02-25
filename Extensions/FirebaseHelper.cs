@@ -129,6 +129,15 @@ namespace EducationalSoftware.Extensions
                 .Child("Login")
                 .PostAsync(new Login { Email = email, Password = password, Token = token });
         }
+        public async Task DeleteLogin(string email)
+        {
+            var toDeleteAdmin = (await client
+              .Child("Login")
+              .OnceAsync<Login>()).Where(a => a.Object.Email == email).First();
+            await client.Child("Login").Child(toDeleteAdmin.Key).DeleteAsync();
+
+        }
+
         #endregion
 
         #region Registration request
@@ -470,11 +479,11 @@ namespace EducationalSoftware.Extensions
                   Age = age
               });
         }
-        public async Task DeleteAdmin(string verificationCode)
+        public async Task DeleteAdmin(string email)
         {
             var toDeleteAdmin = (await client
               .Child("Admins")
-              .OnceAsync<Admin>()).Where(a => a.Object.VerificationCode == verificationCode).First();
+              .OnceAsync<Admin>()).Where(a => a.Object.Email == email).First();
             await client.Child("Admins").Child(toDeleteAdmin.Key).DeleteAsync();
 
         }

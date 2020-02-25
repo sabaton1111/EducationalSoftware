@@ -70,16 +70,20 @@
     <Compile Include="Extensions\Encryption.cs" />
     <Compile Include="Extensions\FirebaseHelper.cs" />
     <Compile Include="Extensions\PopupWindow.cs" />
+    <Compile Include="Extensions\SessionHelper.cs" />
     <Compile Include="Fragments\HomeFragment.cs" />
     <Compile Include="Fragments\LoginFragment.cs" />
     <Compile Include="Fragments\RegisterFragment.cs" />
     <Compile Include="Fragments\RegistrationTypeFragment.cs" />
+    <Compile Include="Fragments\SettingsFragment.cs" />
+    <Compile Include="Fragments\TestFragment.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\MultipleChoiceTest.cs" />
     <Compile Include="Models\RegistrationRequest.cs" />
     <Compile Include="Models\SchoolStudent.cs" />
+    <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\UniversityStudent.cs" />
     <Compile Include="Models\User.cs" />
@@ -271,6 +275,19 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\colors_nav_bar.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\background240DPI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_settings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_border_dark.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -23,92 +23,74 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentFirstName"
                 android:inputType="text"
-                android:textAlignment="center"
                 android:hint="@string/first_name"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentLastName"
                 android:inputType="text"
-                android:textAlignment="center"
-                android:hint="@string/last_name"/>
+                 android:hint="@string/last_name"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentEmail"
                 android:inputType="textEmailAddress"
-                android:textAlignment="center"
                 android:hint="@string/email"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentPassword"
                 android:inputType="textPassword"
-                android:textAlignment="center"
                 android:hint="@string/password"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentRepeatPassword"
                 android:inputType="textPassword"
-                android:textAlignment="center"
                 android:hint="@string/repeat_password"/>
-            
-                <EditText
+
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentSchool"
                 android:inputType="text"
-                android:textAlignment="center"
                 android:hint="@string/school"/>
-                 
-                <EditText
+
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentClass"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:hint="@string/classes"/>
 
-                 
-                <EditText
+
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentCountry"
                 android:inputType="text"
-                android:textAlignment="center"
                 android:hint="@string/country"/>
-                 
-                <EditText
+
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentCity"
                 android:inputType="text"
-                android:textAlignment="center"
                 android:hint="@string/city"/>
 
 
@@ -116,11 +98,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/editTextStyle"
                 android:id="@+id/editTextStudentAge"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:hint="@string/age"/>
 
             <Button
@@ -137,7 +117,7 @@
                 android:id="@+id/btnStudentRegisterUser" />
 
         </LinearLayout>
-        
+
 
     </ScrollView>
 </LinearLayout>

@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/background240dpi">
     <RadioGroup
         android:minWidth="25px"
         android:minHeight="25px"
@@ -18,49 +19,65 @@
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:checked="true"
-            android:gravity="center"
+            android:buttonTint="#ff6600"
+            android:paddingLeft="20dp"
+            android:layout_alignParentLeft="true"
             android:text="Administrator"
+            android:textSize="18dp"
             android:id="@+id/radioButtonAdmin" />
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:buttonTint="#ff6600"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_alignParentLeft="true"
+                        android:textSize="18dp"
             android:text="School student"
             android:id="@+id/radioButtonScoolStudent" />
         <RadioButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:buttonTint="#ff6600"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_alignParentLeft="true"
             android:text="University student"
+                      android:textSize="18dp" 
             android:id="@+id/radioButtonUniversityStudent" />
         <RadioButton
             android:text="Teacher"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:buttonTint="#ff6600"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_alignParentLeft="true"
+                      android:textSize="18dp"  
             android:id="@+id/radioButtonTeacher" />
-                <RadioButton
+        <RadioButton
             android:text="Other"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:buttonTint="#ff6600"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_alignParentLeft="true"
+                       android:textSize="18dp"
             android:id="@+id/radioButtonOther" />
     </RadioGroup>
     <Button
         android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_marginTop="40dp"
+        android:background = "@drawable/button_border"
         android:text="Next"/>
 
 </LinearLayout>
