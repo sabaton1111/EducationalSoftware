@@ -1,8 +1,5 @@
 <resources>
   <string name="app_name">EducationalSoftware</string>
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="action_settings">Settings</string>
   <string name="first_name">First name</string>
   <string name="register_user">Register user</string>
   <string name="last_name">Last name</string>
@@ -21,5 +18,9 @@
   <string name="institution">Institution</string>
   <string name="university">University</string>
   <string name="course">Course</string>
-  
+  <string name="forgot_password">Forgot password?</string>
+  <string name="test_name">Test name</string>
+  <string name="test_notation">Test notation</string>
+  <string name="number_of_questions">Number of questions</string>
+  <string name="add_question">Add question</string>
 </resources>

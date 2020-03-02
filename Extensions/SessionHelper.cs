@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using EducationalSoftware.Models;
 using Firebase.Database;
 using Firebase.Database.Query;
@@ -18,7 +10,6 @@ namespace EducationalSoftware.Extensions
     public class SessionHelper
     {
         FirebaseClient client = new FirebaseClient("https://educationalsoftware-ba7e4.firebaseio.com/");
-
         public async Task<List<Session>> GetAllSessions()
         {
             return (await client
@@ -31,16 +22,14 @@ namespace EducationalSoftware.Extensions
                     Token = item.Object.Token
                 }).ToList();
         }
-
         public async Task<Session> GetSession(string sessionString)
         {
-            var allUsers = await Task.Run(() => GetAllSessions()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allSessions = await Task.Run(() => GetAllSessions()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Session")
                 .OnceAsync<User>();
-            return allUsers.Where(a => a.SessionString == sessionString).First();
+            return allSessions.Where(a => a.SessionString == sessionString).First();
         }
-
         public async Task AddSession(string session, string email, string token)
         {
             await client
@@ -49,12 +38,10 @@ namespace EducationalSoftware.Extensions
         }
         public async Task DeleteSession(string email)
         {
-            var toDeleteUser = (await client
+            var toDeleteSession = (await client
               .Child("Session")
               .OnceAsync<Login>()).Where(a => a.Object.Email == email).First();
-            await client.Child("Session").Child(toDeleteUser.Key).DeleteAsync();
-
+            await client.Child("Session").Child(toDeleteSession.Key).DeleteAsync();
         }
-       
     }
 }

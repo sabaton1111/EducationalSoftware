@@ -17,13 +17,13 @@ namespace EducationalSoftware.Models
         private string verificationCode;
         public string VerificationCode { get; set; }
         #region Constructors
-        public Admin(string firstName, string lastName, string email, string password, short age, string verificationCode)
+        public Admin(string verificationCode, string firstName, string lastName, string email, string password, short age)
             : base(firstName, lastName, email, password, age)
         {
             VerificationCode = verificationCode;
         }
-        public Admin() : this("Empty", "Empty", "Empty", "Empty", 0, "Empty") { }
-        public Admin(Admin admin) : this(admin.FirstName, admin.LastName, admin.Email, admin.Password, admin.Age, admin.verificationCode) { }
+        public Admin() : this("Empty", "Empty", "Empty", "Empty", "Empty", 0) { }
+        public Admin(Admin admin) : this(admin.verificationCode, admin.FirstName, admin.LastName, admin.Email, admin.Password, admin.Age) { }
         #endregion 
     }
 }

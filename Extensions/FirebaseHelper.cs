@@ -5,45 +5,44 @@ using Firebase.Database;
 using System.Threading.Tasks;
 using EducationalSoftware.Models;
 using Firebase.Database.Query;
+using System;
 
 namespace EducationalSoftware.Extensions
 {
     public class FirebaseHelper
     {
+
+
         FirebaseClient client = new FirebaseClient("https://educationalsoftware-ba7e4.firebaseio.com/");
 
         #region Registration helpers
-
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<T>> GetAllUsers<T>(string token)
         {
             return (await client
-                .Child("Users")
-                .OnceAsync<User>())
-                .Select(item => new User
-                {
-                    FirstName = item.Object.FirstName,
-                    LastName = item.Object.LastName,
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    Age = item.Object.Age
-                }).ToList();
+                .Child(token)
+                .OnceAsync<T>())
+                .Select(item => item.Object).ToList();
         }
-        public async Task AddUser(string firstName, string lastName, string email, string password, short age)
+        public async Task AddToFirebase<T>(T t, string token)
         {
             await client
-                .Child("Users")
-                .PostAsync(new User
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password,
-                    Age = age
-                });
+                .Child(token)
+                .PostAsync(t);
         }
+        //public async Task<T> GetUser<T>(string email, string token)
+        //{
+
+        //    var allUsers = await Task.Run(() => GetAllUsers<T>(token)).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+        //    await client
+        //        .Child(token)
+        //        .OnceAsync<T>();
+        //    return allUsers.Where(a => a.Email == email).First();
+
+        //}
+
         public async Task<User> GetUser(string email)
         {
-            var allUsers = await Task.Run(() => GetAllUsers()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allUsers = await Task.Run(() => GetAllUsers<User>("Users")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Users")
                 .OnceAsync<User>();
@@ -97,37 +96,17 @@ namespace EducationalSoftware.Extensions
               .OnceAsync<User>()).Where(a => a.Object.Email == email).First();
             await client.Child("Users").Child(toDeleteUser.Key).DeleteAsync();
 
-        } 
+        }
         #endregion
 
         #region Login helpers
-        public async Task<List<Login>> GetAllUsersLogin()
-        {
-            return (await client
-                .Child("Login")
-                .OnceAsync<Login>())
-                .Select(item => new Login
-                {
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    Token = item.Object.Token
-                }).ToList();
-        }
-
         public async Task<Login> GetLogin(string email)
         {
-            var allUsers = await Task.Run(() => GetAllUsersLogin()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allUsers = await Task.Run(() => GetAllUsers<Login>("Login")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Login")
                 .OnceAsync<User>();
             return allUsers.Where(a => a.Email == email).First();
-        }
-
-        public async Task AddEmailPass(string email, string password, string token)
-        {
-            await client
-                .Child("Login")
-                .PostAsync(new Login { Email = email, Password = password, Token = token });
         }
         public async Task DeleteLogin(string email)
         {
@@ -141,34 +120,14 @@ namespace EducationalSoftware.Extensions
         #endregion
 
         #region Registration request
-        public async Task<List<RegistrationRequest>> GetAllRequests()
-        {
-            return (await client
-                .Child("Request")
-                .OnceAsync<RegistrationRequest>())
-                .Select(item => new RegistrationRequest
-                {
-                    RequestString = item.Object.RequestString,
-                    Token = item.Object.Token
-                }).ToList();
-        }
-
         public async Task<RegistrationRequest> GetRequest(string requestString)
         {
-            var allRequests = await Task.Run(() => GetAllRequests()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allRequests = await Task.Run(() => GetAllUsers<RegistrationRequest>("Request")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Request")
                 .OnceAsync<RegistrationRequest>();
             return allRequests.Where(a => a.RequestString == requestString).First();
         }
-
-        public async Task AddRequest(string requestString, string token)
-        {
-            await client
-                .Child("Request")
-                .PostAsync(new RegistrationRequest { RequestString = requestString, Token = token });
-        }
-
         public async Task UpdateRequest(string requestString, string token)
         {
             var toUpdateRequest = (await client
@@ -187,46 +146,15 @@ namespace EducationalSoftware.Extensions
         #endregion
 
         #region Teacher registration
-        public async Task<List<Teacher>> GetTeacherUsers()
-        {
-            return (await client
-                .Child("Teachers")
-                .OnceAsync<Teacher>())
-                .Select(item => new Teacher
-                {
-                    FirstName = item.Object.FirstName,
-                    LastName = item.Object.LastName,
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    Institution = item.Object.Institution,
-                    Subject = item.Object.Subject,
-                    Age = item.Object.Age
-                }).ToList();
-        }
-        public async Task AddTeacher(string firstName, string lastName, string email, string password, string subject, string institution, short age)
-        {
-            await client
-                .Child("Teachers")
-                .PostAsync(new Teacher
-                {
-                    Subject = subject,
-                    Institution = institution,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password,
-                    Age = age
-                });
-        }
+        
         public async Task<Teacher> GetTeacher(string email)
         {
-            var allTeachers = await Task.Run(() => GetTeacherUsers()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allTeachers = await Task.Run(() => GetAllUsers<Teacher>("Teachers")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Teachers")
                 .OnceAsync<Teacher>();
             return allTeachers.Where(a => a.Email == email).First();
         }
-
         public async Task UpdateTeacher(string firstName, string lastName, string email, string password, string subject, string institution, short age)
         {
             var toUpdateTeacher = (await client
@@ -259,55 +187,16 @@ namespace EducationalSoftware.Extensions
         #endregion
 
         #region University student
-        public async Task<List<UniversityStudent>> GetUniversityStudentUsers()
-        {
-            return (await client
-                .Child("UniversityStudents")
-                .OnceAsync<UniversityStudent>())
-                .Select(item => new UniversityStudent
-                {
-                    FirstName = item.Object.FirstName,
-                    LastName = item.Object.LastName,
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    UniversityName = item.Object.UniversityName,
-                    Speciality = item.Object.Speciality,
-                    Course = item.Object.Course,
-                    Country = item.Object.Country,
-                    City = item.Object.City,
-                    Age = item.Object.Age
-                }).ToList();
-        }
-        public async Task AddUniversityStudent(string firstName, string lastName, string email, string password, 
-            string universityName, string speciality, short course, string country, string city, short age)
-        {
-            await client
-                .Child("UniversityStudents")
-                .PostAsync(new UniversityStudent
-                {
-                   
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password,
-                    UniversityName = universityName,
-                    Speciality = speciality,
-                    Course = course,
-                    Country = country,
-                    City = city,
-                    Age = age
-                });
-        }
         public async Task<UniversityStudent> GetUniversityStudent(string email)
         {
-            var allUniversityStudents = await Task.Run(() => GetUniversityStudentUsers()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allUniversityStudents = await Task.Run(() => GetAllUsers<UniversityStudent>("UniversityStudents")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("UniversityStudents")
                 .OnceAsync<UniversityStudent>();
             return allUniversityStudents.Where(a => a.Email == email).First();
         }
 
-        public async Task UpdateUniversityStudent(string firstName, string lastName, string email, string password, 
+        public async Task UpdateUniversityStudent(string firstName, string lastName, string email, string password,
             string universityName, string speciality, short course, string country, string city, short age)
         {
             var toUpdateUniversityStudent = (await client
@@ -342,46 +231,10 @@ namespace EducationalSoftware.Extensions
         #endregion
 
         #region School student
-        public async Task<List<SchoolStudent>> GetSchoolStudentUsers()
-        {
-            return (await client
-                .Child("SchoolStudents")
-                .OnceAsync<SchoolStudent>())
-                .Select(item => new SchoolStudent
-                {
-                    FirstName = item.Object.FirstName,
-                    LastName = item.Object.LastName,
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    SchoolName = item.Object.SchoolName,
-                    ClassInSchool = item.Object.ClassInSchool,
-                    Country = item.Object.Country,
-                    City = item.Object.City,
-                    Age = item.Object.Age
-                }).ToList();
-        }
-        public async Task AddSchoolStudent(string firstName, string lastName, string email, string password,
-            string schoolName, short classInSchool, string country, string city, short age)
-        {
-            await client
-                .Child("SchoolStudents")
-                .PostAsync(new SchoolStudent
-                {
-
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password,
-                    SchoolName = schoolName,
-                    ClassInSchool = classInSchool,
-                    Country = country,
-                    City = city,
-                    Age = age
-                });
-        }
+   
         public async Task<SchoolStudent> GetSchoolStudent(string email)
         {
-            var allSchoolStudents = await Task.Run(() => GetSchoolStudentUsers()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allSchoolStudents = await Task.Run(() => GetAllUsers<SchoolStudent>("SchoolStudents")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("SchoolStudents")
                 .OnceAsync<SchoolStudent>();
@@ -422,44 +275,16 @@ namespace EducationalSoftware.Extensions
         #endregion
 
         #region Admin registration
-        public async Task<List<Admin>> GetAdminUsers()
-        {
-            return (await client
-                .Child("Admins")
-                .OnceAsync<Admin>())
-                .Select(item => new Admin
-                {
-                    VerificationCode = item.Object.VerificationCode,
-                    FirstName = item.Object.FirstName,
-                    LastName = item.Object.LastName,
-                    Email = item.Object.Email,
-                    Password = item.Object.Password,
-                    Age = item.Object.Age
-                }).ToList();
-        }
-        public async Task AddAdmin(string verificationCode,string firstName, string lastName, string email, string password, short age)
-        {
-            await client
-                .Child("Admins")
-                .PostAsync(new Admin
-                {
-                    VerificationCode = verificationCode,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password,
-                    Age = age
-                });
-        }
+  
         public async Task<Admin> GetAdmin(string verificationCode)
         {
-            var allAdmins = await Task.Run(() => GetAdminUsers()).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
+            var allAdmins = await Task.Run(() => GetAllUsers<Admin>("Admins")).ConfigureAwait(continueOnCapturedContext: false);//GetAllUsers().ConfigureAwait(false);
             await client
                 .Child("Admins")
                 .OnceAsync<Admin>();
             return allAdmins.Where(a => a.VerificationCode == verificationCode).First();
         }
-       
+
         public async Task UpdateAdmin(string verificationCode, string firstName, string lastName, string email, string password, short age)
         {
             var toUpdateAdmin = (await client
@@ -489,5 +314,6 @@ namespace EducationalSoftware.Extensions
         }
 
         #endregion
+
     }
 }

@@ -14,45 +14,46 @@ namespace EducationalSoftware.Models
 {
     public class MultipleChoiceTest
     {
-        const int LENGTH = 5;
+        #region Data members
+    //    private ImageView imgView;
+        private string userCreatedTest;
         private int numberOfQuestions;
-        private string[] questionAnswers;
-        private List<string[]> test;
-        public int NumberOfQuestions
-        {
-            get
-            {
-                return numberOfQuestions;
-            }
-            set
-            {
-                numberOfQuestions = value;
-            }
-        }
-        public string[] QuestionAnswers
-        { 
-            get 
-            { 
-                return questionAnswers; 
-            } 
-            set 
-            {
-                questionAnswers = new string[LENGTH];
-                questionAnswers = value; 
-            } 
-        }
-        public List<string[]> Test { get; set; }
+        private string testName;
+        private string testNotation;
+        private DateTime dateCreated;
+        #endregion
 
-        public MultipleChoiceTest(int numberOfQuestions, string[] questionAnswers, List<string[]> test)
+        #region Properties
+      //  public ImageView ImgView { get; set; }
+        public string UserCreatedTest { get; set; }
+        public int NumberOfQuestions { get; set; }
+        public string TestName { get; set; }
+        public string TestNotation { get; set; }
+        public DateTime DateCreated { get; set; }
+
+        #endregion
+
+        #region Constructors
+        //Constructor with paramenters
+        public MultipleChoiceTest(string userCreatedTest, int numberOfQuestions, string testName, string testNotation)
         {
+           // ImgView = imgView;
+            UserCreatedTest = userCreatedTest;
             NumberOfQuestions = numberOfQuestions;
-            QuestionAnswers = questionAnswers;
-            Test = test;
+            TestName = testName;
+            TestNotation = testNotation;
+            DateCreated = DateTime.Now;
+
         }
 
-        public MultipleChoiceTest() : this(0, null, null) { }
+        //Default constructor
+        public MultipleChoiceTest() : this("Empty", 0, "Empty", "Empty") { }
 
-        public MultipleChoiceTest(MultipleChoiceTest choiceTest) : this (choiceTest.NumberOfQuestions, choiceTest.QuestionAnswers,
-            choiceTest.Test) { }
+        //Copy constructor
+        public MultipleChoiceTest(MultipleChoiceTest choiceTest) : this(choiceTest.UserCreatedTest, choiceTest.NumberOfQuestions, choiceTest.TestName,
+            choiceTest.TestNotation)
+        { }
+
+        #endregion
     }
 }

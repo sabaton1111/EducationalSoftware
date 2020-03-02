@@ -19,6 +19,7 @@ namespace EducationalSoftware.Fragments
         private EditText etFirstName, etLastName, etEmail, etPassword, etRepeatPassword, etAge,
             etVerificationKey, etSchool, etCity, etCountry, etClass, etSubject;
         private Android.Widget.Button btnRegister;
+
         private FirebaseHelper firebaseHelper = new FirebaseHelper();
         #endregion
         public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -196,7 +197,7 @@ namespace EducationalSoftware.Fragments
         }
         public bool VerifyStudent()
         {
-            if (verify.VerifyClass(Convert.ToInt16(etClass)) == false)
+            if (verify.VerifyClass(Convert.ToInt16(etClass.Text)) == false)
             {
                 alertWindow.Alert("Error!", "Invalid class!", Activity);
                 return false;
@@ -213,66 +214,65 @@ namespace EducationalSoftware.Fragments
             }
             return true;
         }
-        private async void BtnUStudentRegister_Click(object sender, EventArgs e)
+
+        public async void UserToAdd<T,U>(T userType, U login, string token)
+        {
+            //Adding user to firebase child by it's token value 
+            await firebaseHelper.AddToFirebase(userType, token);
+            await firebaseHelper.AddToFirebase(login, "Login");
+            alertWindow.Alert("Message", "Successful registration", Activity);
+            Fragment loginFragment = new LoginFragment();
+            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+        }
+        private void BtnUStudentRegister_Click(object sender, EventArgs e)
         {
             if (Verify() == true && VerifyStudent() == true)
             {
-                await firebaseHelper.AddUniversityStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
-                etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSchool.Text,
-                etSubject.Text, Convert.ToInt16(etClass.Text), etCountry.Text, etCity.Text, Convert.ToInt16(etAge.Text));
-                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Teacher");
-                alertWindow.Alert("Message", "Successful registration", Activity);
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+                UniversityStudent student = new UniversityStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
+                etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text),
+                etSubject.Text, Convert.ToInt16(etClass.Text), etSchool.Text, etCity.Text, etCountry.Text);
+                Login login = new Login(etEmail.Text, etPassword.Text, "UniversityStudent");
+                UserToAdd(student, login, "UniversityStudents");
 
             }
         }
-        private async void BtnTeacherRegister_Click(object sender, EventArgs e)
+        private void BtnTeacherRegister_Click(object sender, EventArgs e)
         {
             if (Verify() == true)
             {
-                await firebaseHelper.AddTeacher(etFirstName.Text, etLastName.Text, etEmail.Text,
-                   etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSubject.Text, etSchool.Text, Convert.ToInt16(etAge.Text));
-                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Teacher");
-                alertWindow.Alert("Message", "Successful registration", Activity);
-
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+                Teacher teacher = new Teacher(etFirstName.Text, etLastName.Text, etEmail.Text,
+                   etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text), etSubject.Text, etSchool.Text);
+                Login login = new Login(etEmail.Text, etPassword.Text, "Teacher");
+                UserToAdd(teacher, login, "Teachers");
             }
         }
-        private async void BtnStudentRegister_Click(object sender, EventArgs e)
+        private void BtnStudentRegister_Click(object sender, EventArgs e)
         {
             if (Verify() == true && VerifyStudent() == true)
             {
-                await firebaseHelper.AddSchoolStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
-                etPassword.Text = encryption.EncodeServerName(etPassword.Text), etSchool.Text,
-                Convert.ToInt16(etClass.Text), etCountry.Text, etCity.Text, Convert.ToInt16(etAge.Text));
-                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "SchoolStudent");
-                alertWindow.Alert("Message", "Successful registration", Activity);
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+                SchoolStudent schoolStudent = new SchoolStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
+                etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text),
+                Convert.ToInt16(etClass.Text), etSchool.Text, etCity.Text, etCountry.Text);
+                Login login = new Login(etEmail.Text, etPassword.Text, "SchoolStudent");
+                UserToAdd(schoolStudent, login, "SchoolStudents");
             }
         }
-        private async void BtnAdminRegister_Click(object sender, EventArgs e)
+        private void BtnAdminRegister_Click(object sender, EventArgs e)
         {
             if(Verify()==true)
             {
-                await firebaseHelper.AddAdmin(etVerificationKey.Text, etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
-                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "Admin");
-                alertWindow.Alert("Message", "Successful registration", Activity);
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+                Admin admin = new Admin(etVerificationKey.Text, etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                Login login = new Login(etEmail.Text, etPassword.Text, "Admin");
+                UserToAdd(admin, login, "Admins");
             }
         }
-        private async void AddUser_Click(object sender, EventArgs e)
+        private void AddUser_Click(object sender, EventArgs e)
         {
             if (Verify() == true)
             {
-                await firebaseHelper.AddUser(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
-                await firebaseHelper.AddEmailPass(etEmail.Text, etPassword.Text, "User");
-                alertWindow.Alert("Message", "Successful registration", Activity);
-                Fragment loginFragment = new LoginFragment();
-                FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
+                User user = new User(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                Login login = new Login(etEmail.Text, etPassword.Text, "User");
+                UserToAdd(user, login, "Users");
             }
         }
     }

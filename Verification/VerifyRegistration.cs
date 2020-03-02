@@ -53,7 +53,6 @@ namespace EducationalSoftware.Verification
             {
                 return false;
             }
-
         }
         public int VerifyPassword(string password, string repeatPassword)
         {

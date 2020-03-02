@@ -1,7 +1,6 @@
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +18,7 @@
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:checked="true"
-            android:buttonTint="#ff6600"
+            android:buttonTint="@color/colorMain"
             android:paddingLeft="20dp"
             android:layout_alignParentLeft="true"
             android:text="Administrator"
@@ -28,7 +27,7 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:buttonTint="#ff6600"
+            android:buttonTint="@color/colorMain"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:paddingLeft="20dp"
@@ -39,7 +38,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:buttonTint="#ff6600"
+            android:buttonTint="@color/colorMain"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:paddingLeft="20dp"
@@ -51,7 +50,7 @@
             android:text="Teacher"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:buttonTint="#ff6600"
+            android:buttonTint="@color/colorMain"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:paddingLeft="20dp"
@@ -62,7 +61,7 @@
             android:text="Other"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:buttonTint="#ff6600"
+            android:buttonTint="@color/colorMain"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:paddingLeft="20dp"
@@ -71,6 +70,7 @@
             android:id="@+id/radioButtonOther" />
     </RadioGroup>
     <Button
+        android:layout_below="@id/radioGroupRegTypes"
         android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -79,5 +79,4 @@
         android:layout_marginTop="40dp"
         android:background = "@drawable/button_border"
         android:text="Next"/>
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,10 +1,9 @@
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/colorWhite">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,13 +11,9 @@
         android:fillViewport="true"
         android:nestedScrollingEnabled="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="match_parent">
 
             <EditText
                 android:layout_width="match_parent"
@@ -29,14 +24,16 @@
                 android:hint="@string/first_name"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
                 android:id="@+id/editTextStudentLastName"
                 android:inputType="text"
-                 android:hint="@string/last_name"/>
+                android:hint="@string/last_name"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentLastName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -45,6 +42,7 @@
                 android:hint="@string/email"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -53,6 +51,7 @@
                 android:hint="@string/password"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -61,6 +60,7 @@
                 android:hint="@string/repeat_password"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentRepeatPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -69,6 +69,7 @@
                 android:hint="@string/school"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentSchool"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -78,6 +79,7 @@
 
 
             <EditText
+                android:layout_below="@id/editTextStudentClass"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -86,6 +88,7 @@
                 android:hint="@string/country"/>
 
             <EditText
+                android:layout_below="@id/editTextStudentCountry"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -96,6 +99,7 @@
 
 
             <EditText
+                android:layout_below="@id/editTextStudentCity"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -104,6 +108,7 @@
                 android:hint="@string/age"/>
 
             <Button
+                android:layout_below="@id/editTextStudentAge"
                 android:text="@string/register_user"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -116,8 +121,8 @@
                 android:minHeight="25px"
                 android:id="@+id/btnStudentRegisterUser" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

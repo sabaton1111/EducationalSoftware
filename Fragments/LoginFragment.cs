@@ -9,32 +9,42 @@ namespace EducationalSoftware.Fragments
 {
     public class LoginFragment : Fragment
     {
+        private TextView txtForgottenPassword;
         private Android.Widget.Button btnRegister, btnLogin;
-        private EditText etEmail, etPassword;
+        private EditText etEmail, etPassword,etPoppUp;
         private Encryption encryption = new Encryption();
         private FirebaseHelper firebaseHelper = new FirebaseHelper();
         private Extensions.PopupWindow alertWindow = new Extensions.PopupWindow();
         private SessionHelper session = new SessionHelper();
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-
-            View view = inflater.Inflate(Resource.Layout.fragment_login, container, false);
             CheckSession();
+            View view = inflater.Inflate(Resource.Layout.fragment_login, container, false);
+
             btnRegister = view.FindViewById<Button>(Resource.Id.btnRegister);
             btnLogin = view.FindViewById<Android.Widget.Button>(Resource.Id.btnLogin);
             etEmail = view.FindViewById<EditText>(Resource.Id.editTextEmail);
             etPassword = view.FindViewById<EditText>(Resource.Id.editTextPassword);
+            txtForgottenPassword = view.FindViewById<TextView>(Resource.Id.txtViewForgottenPass);
+            btnLogin.Enabled = true;
             btnRegister.Click += OnRegister_Click;
             btnLogin.Click += OnLogin_Click;
+            txtForgottenPassword.Click += OnForgottenPassword;
             return view;
         }
+
+        private void OnForgottenPassword(object sender, EventArgs e)
+        {
+            alertWindow.OnForgottenPassword("Type your email", etPoppUp, Activity);
+        }
+
         private void CheckSession()
         {
-            var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
+            string androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
            Android.Provider.Settings.Secure.AndroidId);
             try
             {
-                var item = session.GetSession(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
+                Session item = session.GetSession(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
                 Fragment homeFragment = new HomeFragment(item.Email, item.Token);
                 FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, homeFragment).Commit();
 
@@ -49,6 +59,8 @@ namespace EducationalSoftware.Fragments
         }
         private async void OnLogin_Click(object sender, EventArgs e)
         {
+
+            btnLogin.Enabled = false;
             try
             {
                 var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
@@ -64,11 +76,13 @@ namespace EducationalSoftware.Fragments
                 else
                 {
                     alertWindow.Alert("Error!", "Incorrect email or password!", Activity);
+                    btnLogin.Enabled = true;
                 }
             }
             catch
             {
                 alertWindow.Alert("Error!", "Incorrect email or password!", Activity);
+                btnLogin.Enabled = true;
             }
         }
     }

@@ -1,10 +1,9 @@
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/colorWhite">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,13 +11,9 @@
         android:fillViewport="true"
         android:nestedScrollingEnabled="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="match_parent">
 
             <EditText
                 android:layout_width="match_parent"
@@ -29,6 +24,7 @@
                 android:hint="@string/first_name"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -37,6 +33,7 @@
                 android:hint="@string/last_name"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherLastName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -45,6 +42,7 @@
                 android:hint="@string/email"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -53,6 +51,7 @@
                 android:hint="@string/password"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -60,6 +59,7 @@
                 android:inputType="textPassword"
                 android:hint="@string/repeat_password"/>
             <EditText
+                android:layout_below="@id/editTextTeacherRepeatPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -68,6 +68,7 @@
                 android:hint="@string/subject"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherSubject"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -76,6 +77,7 @@
                 android:hint="@string/institution"/>
 
             <EditText
+                android:layout_below="@id/editTextTeacherInstitution"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 style="@style/editTextStyle"
@@ -84,6 +86,7 @@
                 android:hint="@string/age"/>
 
             <Button
+                android:layout_below="@id/editTextTeacherAge"
                 android:text="@string/register_user"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -95,8 +98,8 @@
                 android:background="@drawable/button_border"
                 android:id="@+id/btnTeacherRegisterUser" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

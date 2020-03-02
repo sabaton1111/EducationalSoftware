@@ -49,7 +49,7 @@ namespace EducationalSoftware.Fragments
                 exceptionCheck = false;
             }
             #region Tokens to db
-
+         
             if (rbtnAdmin.Checked == true)
             {
                 if (exceptionCheck == true)
@@ -58,7 +58,8 @@ namespace EducationalSoftware.Fragments
                 }
                 else
                 {
-                    await firebaseHelper.AddRequest(androidID, "Admin");
+                    RegistrationRequest request = new RegistrationRequest(androidID, "Admin");
+                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request,"Request");
                 }
             }
             else if (rbtnSchoolStudent.Checked)
@@ -69,7 +70,8 @@ namespace EducationalSoftware.Fragments
                 }
                 else
                 {
-                    await firebaseHelper.AddRequest(androidID, "SchoolStudent");
+                    RegistrationRequest request = new RegistrationRequest(androidID, "SchoolStudent");
+                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
                 }
             }
             else if (rbtnTeacher.Checked)
@@ -80,7 +82,8 @@ namespace EducationalSoftware.Fragments
                 }
                 else
                 {
-                    await firebaseHelper.AddRequest(androidID, "Teacher");
+                    RegistrationRequest request = new RegistrationRequest(androidID, "Teacher");
+                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
                 }
             }
             else if (rbtnUniversityStudent.Checked)
@@ -91,7 +94,8 @@ namespace EducationalSoftware.Fragments
                 }
                 else
                 {
-                    await firebaseHelper.AddRequest(androidID, "UniversityStudent");
+                    RegistrationRequest request = new RegistrationRequest(androidID, "UniversityStudent");
+                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
                 }
             }
             else
@@ -102,7 +106,8 @@ namespace EducationalSoftware.Fragments
                 }
                 else
                 {
-                    await firebaseHelper.AddRequest(androidID, "User");
+                    RegistrationRequest request = new RegistrationRequest(androidID, "User");
+                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
                 }
             } 
             #endregion
