@@ -5,6 +5,7 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using EducationalSoftware.Extensions;
+using EducationalSoftware.Models;
 
 namespace EducationalSoftware.Fragments
 {
@@ -38,7 +39,7 @@ namespace EducationalSoftware.Fragments
             View view = inflater.Inflate(Resource.Layout.fragment_home, container, false);
             GetToken();
             bottomNavigation = view.FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
-            if(Token == "Teacher")
+            if (Token == "Teacher")
             {
                 LoadTeacherNavigation();
             }
@@ -126,23 +127,23 @@ namespace EducationalSoftware.Fragments
             {
                 if (Token == "User")
                 {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetUser(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
+                    alertWindow.Alert(EmailAddress, firebaseHelper.GetData<User>("Users", EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
                 }
                 else if (Token == "Admin")
                 {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetAdmin(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
+                    alertWindow.Alert(EmailAddress, firebaseHelper.GetData<Admin>("Admins", EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
                 }
                 else if (Token == "Teacher")
                 {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetTeacher(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
+                   // alertWindow.Alert(EmailAddress, firebaseHelper.GetTeacher(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
                 }
                 else if (Token == "UniversityStudent")
                 {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetUniversityStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
+                  //  alertWindow.Alert(EmailAddress, firebaseHelper.GetUniversityStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
                 }
                 else
                 {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetSchoolStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
+                   // alertWindow.Alert(EmailAddress, firebaseHelper.GetSchoolStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
                 }
             }
             catch { }

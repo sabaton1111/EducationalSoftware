@@ -15,13 +15,11 @@ namespace EducationalSoftware.Models
     public class User
     {
         #region Datamembers
-
         private string firstName;
         private string lastName;
         private string email;
         private string password;
         private short age;
-
         #endregion
 
         #region Properties
@@ -30,11 +28,10 @@ namespace EducationalSoftware.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public short Age { get; set; }
-
         #endregion
 
         #region Constructors
-
+        //Constructor with parameters
         public User(string firstName, string lastName, string email, string password, short age)
         {
             FirstName = firstName;
@@ -43,11 +40,10 @@ namespace EducationalSoftware.Models
             Password = password;
             Age = age;
         }
-
+        //Default constructor
         public User() : this("Empty", "Empty", "Empty", "Empty", 0) { }
-
+        //Copy constructor
         public User(User user) : this(user.FirstName, user.LastName, user.Email, user.Password, user.Age) { }
-
         #endregion
     }
 }

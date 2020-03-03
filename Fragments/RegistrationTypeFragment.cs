@@ -11,13 +11,19 @@ namespace EducationalSoftware.Fragments
     public class RegistrationTypeFragment : Fragment
     {
         #region Data members
+
+        #region Fragment components
         private RadioGroup group;
         private RadioButton rbtnAdmin, rbtnSchoolStudent, rbtnTeacher, rbtnUniversityStudent, rbtnOther;
         private Button btnNext;
+        #endregion
+
+        #region Helpers
         private FirebaseHelper firebaseHelper = new FirebaseHelper();
         private Extensions.PopupWindow alertWindow = new Extensions.PopupWindow();
-        private RegistrationRequest request = new RegistrationRequest();
-        private bool exceptionCheck = true;
+        private RegistrationRequest regRequest = new RegistrationRequest();
+        #endregion
+
         #endregion
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -36,83 +42,50 @@ namespace EducationalSoftware.Fragments
             btnNext.Click += BtnNext_Click;
             return view;
         }
-        private async void BtnNext_Click(object sender, EventArgs e)
+        private void BtnNext_Click(object sender, EventArgs e)
         {
+            #region Tokens to db
+            int id = group.CheckedRadioButtonId;
+            switch (id)
+            {
+                case Resource.Id.radioButtonAdmin:
+                    MakeRequest("Admin");
+                    break;
+                case Resource.Id.radioButtonScoolStudent:
+                    MakeRequest("SchoolStudent");
+                    break;
+                case Resource.Id.radioButtonTeacher:
+                    MakeRequest("Teacher");
+                    break;
+                case Resource.Id.radioButtonUniversityStudent:
+                    MakeRequest("UniversityStudent");
+                    break;
+                case Resource.Id.radioButtonOther:
+                    MakeRequest("User");
+                    break;
+            }
+            #endregion
+        }
+        public async void MakeRequest(string token)
+        {
+            //Getting device ID
             var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
-            Android.Provider.Settings.Secure.AndroidId);
+              Android.Provider.Settings.Secure.AndroidId);
             try
             {
-                request = firebaseHelper.GetRequest(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
+                //If there is previous request from the same device, updating request
+                regRequest = firebaseHelper.GetRequest(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
+                await firebaseHelper.UpdateRequest(androidID, token);
             }
             catch
             {
-                exceptionCheck = false;
+                //Create request
+                RegistrationRequest request = new RegistrationRequest(androidID, token);
+                await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
             }
-            #region Tokens to db
-         
-            if (rbtnAdmin.Checked == true)
-            {
-                if (exceptionCheck == true)
-                {
-                    await firebaseHelper.UpdateRequest(androidID, "Admin");
-                }
-                else
-                {
-                    RegistrationRequest request = new RegistrationRequest(androidID, "Admin");
-                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request,"Request");
-                }
-            }
-            else if (rbtnSchoolStudent.Checked)
-            {
-                if (exceptionCheck == true)
-                {
-                    await firebaseHelper.UpdateRequest(androidID, "SchoolStudent");
-                }
-                else
-                {
-                    RegistrationRequest request = new RegistrationRequest(androidID, "SchoolStudent");
-                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
-                }
-            }
-            else if (rbtnTeacher.Checked)
-            {
-                if (exceptionCheck == true)
-                {
-                    await firebaseHelper.UpdateRequest(androidID, "Teacher");
-                }
-                else
-                {
-                    RegistrationRequest request = new RegistrationRequest(androidID, "Teacher");
-                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
-                }
-            }
-            else if (rbtnUniversityStudent.Checked)
-            {
-                if (exceptionCheck == true)
-                {
-                    await firebaseHelper.UpdateRequest(androidID, "UniversityStudent");
-                }
-                else
-                {
-                    RegistrationRequest request = new RegistrationRequest(androidID, "UniversityStudent");
-                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
-                }
-            }
-            else
-            {
-                if (exceptionCheck == true)
-                {
-                    await firebaseHelper.UpdateRequest(androidID, "User");
-                }
-                else
-                {
-                    RegistrationRequest request = new RegistrationRequest(androidID, "User");
-                    await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
-                }
-            } 
-            #endregion
+            //Loading registration form
             Fragment registerOtherFragment = new RegisterFragment();
-            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).Commit();
+            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).AddToBackStack(null).Commit();
         }
     }
 }

@@ -13,47 +13,56 @@ namespace EducationalSoftware.Fragments
     public class RegisterFragment : Fragment
     {
         #region Data members
+
+        #region Fragment components
+        private EditText etFirstName, etLastName, etEmail, etPassword, etRepeatPassword, etAge,
+        etVerificationKey, etSchool, etCity, etCountry, etClass, etSubject;
+        private Android.Widget.Button btnRegister;
+        #endregion
+
+        #region Helpers
         private VerifyRegistration verify = new VerifyRegistration();
         private Encryption encryption = new Encryption();
         private Extensions.PopupWindow alertWindow = new Extensions.PopupWindow();
-        private EditText etFirstName, etLastName, etEmail, etPassword, etRepeatPassword, etAge,
-            etVerificationKey, etSchool, etCity, etCountry, etClass, etSubject;
-        private Android.Widget.Button btnRegister;
+        private FirebaseHelper firebaseHelper = new FirebaseHelper(); 
+        #endregion
 
-        private FirebaseHelper firebaseHelper = new FirebaseHelper();
         #endregion
         public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return SetView(inflater, container, savedInstanceState);
         }
+        
+        //Setting view by chosen registration type
         private View SetView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var androidID = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver,
           Android.Provider.Settings.Secure.AndroidId);
-
+           
+            //Making request
             RegistrationRequest req = firebaseHelper.GetRequest(androidID).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (req.Token == "User")
             {
                 Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register, container, false);
 
-                //Initializing editText boxes and register button
-
+                #region Initialize fragment components
                 etFirstName = view.FindViewById<EditText>(Resource.Id.editTextFirstName);
                 etLastName = view.FindViewById<EditText>(Resource.Id.editTextLastName);
                 etEmail = view.FindViewById<EditText>(Resource.Id.editTextEmail);
                 etPassword = view.FindViewById<EditText>(Resource.Id.editTextPassword);
                 etRepeatPassword = view.FindViewById<EditText>(Resource.Id.editTextRepeatPassword);
-                etAge = view.FindViewById<EditText>(Resource.Id.editTextAge);
+                etAge = view.FindViewById<EditText>(Resource.Id.editTextAge); 
+                #endregion
 
                 btnRegister = view.FindViewById<Android.Widget.Button>(Resource.Id.btnRegisterUser);
                 btnRegister.Click += AddUser_Click;
                 return view;
             }
-
             else if (req.Token == "Teacher")
             {
                 Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_teacher, container, false);
+                #region Initializing fragment components
                 etSubject = view.FindViewById<EditText>(Resource.Id.editTextTeacherSubject);
                 etSchool = view.FindViewById<EditText>(Resource.Id.editTextTeacherInstitution);
                 etFirstName = view.FindViewById<EditText>(Resource.Id.editTextTeacherFirstName);
@@ -61,7 +70,8 @@ namespace EducationalSoftware.Fragments
                 etEmail = view.FindViewById<EditText>(Resource.Id.editTextTeacherEmail);
                 etPassword = view.FindViewById<EditText>(Resource.Id.editTextTeacherPassword);
                 etRepeatPassword = view.FindViewById<EditText>(Resource.Id.editTextTeacherRepeatPassword);
-                etAge = view.FindViewById<EditText>(Resource.Id.editTextTeacherAge);
+                etAge = view.FindViewById<EditText>(Resource.Id.editTextTeacherAge); 
+                #endregion
                 btnRegister = view.FindViewById<Android.Widget.Button>(Resource.Id.btnTeacherRegisterUser);
                 btnRegister.Click += BtnTeacherRegister_Click;
 
@@ -79,11 +89,11 @@ namespace EducationalSoftware.Fragments
                 etPassword = view.FindViewById<EditText>(Resource.Id.editTextAdminPassword);
                 etRepeatPassword = view.FindViewById<EditText>(Resource.Id.editTextAdminRepeatPassword);
                 etAge = view.FindViewById<EditText>(Resource.Id.editTextAdminAge);
+
                 btnRegister = view.FindViewById<Android.Widget.Button>(Resource.Id.btnAdminRegisterUser);
                 btnRegister.Click += BtnAdminRegister_Click;
                 return view;
             }
-
             else if (req.Token == "UniversityStudent")
             {
                 Android.Views.View view = inflater.Inflate(Resource.Layout.fragment_register_university_student, container, false);
@@ -214,8 +224,7 @@ namespace EducationalSoftware.Fragments
             }
             return true;
         }
-
-        public async void UserToAdd<T,U>(T userType, U login, string token)
+        public async void UserToAdd<T, U>(T userType, U login, string email, string token)
         {
             //Adding user to firebase child by it's token value 
             await firebaseHelper.AddToFirebase(userType, token);
@@ -229,10 +238,10 @@ namespace EducationalSoftware.Fragments
             if (Verify() == true && VerifyStudent() == true)
             {
                 UniversityStudent student = new UniversityStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
-                etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text),
+                etPassword.Text = encryption.EncodePassword(etPassword.Text), Convert.ToInt16(etAge.Text),
                 etSubject.Text, Convert.ToInt16(etClass.Text), etSchool.Text, etCity.Text, etCountry.Text);
                 Login login = new Login(etEmail.Text, etPassword.Text, "UniversityStudent");
-                UserToAdd(student, login, "UniversityStudents");
+                UserToAdd(student, login, etEmail.Text, "UniversityStudents");
 
             }
         }
@@ -241,9 +250,9 @@ namespace EducationalSoftware.Fragments
             if (Verify() == true)
             {
                 Teacher teacher = new Teacher(etFirstName.Text, etLastName.Text, etEmail.Text,
-                   etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text), etSubject.Text, etSchool.Text);
+                   etPassword.Text = encryption.EncodePassword(etPassword.Text), Convert.ToInt16(etAge.Text), etSubject.Text, etSchool.Text);
                 Login login = new Login(etEmail.Text, etPassword.Text, "Teacher");
-                UserToAdd(teacher, login, "Teachers");
+                UserToAdd(teacher, login, etEmail.Text, "Teachers");
             }
         }
         private void BtnStudentRegister_Click(object sender, EventArgs e)
@@ -251,28 +260,28 @@ namespace EducationalSoftware.Fragments
             if (Verify() == true && VerifyStudent() == true)
             {
                 SchoolStudent schoolStudent = new SchoolStudent(etFirstName.Text, etLastName.Text, etEmail.Text,
-                etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text),
+                etPassword.Text = encryption.EncodePassword(etPassword.Text), Convert.ToInt16(etAge.Text),
                 Convert.ToInt16(etClass.Text), etSchool.Text, etCity.Text, etCountry.Text);
                 Login login = new Login(etEmail.Text, etPassword.Text, "SchoolStudent");
-                UserToAdd(schoolStudent, login, "SchoolStudents");
+                UserToAdd(schoolStudent, login, etEmail.Text, "SchoolStudents");
             }
         }
         private void BtnAdminRegister_Click(object sender, EventArgs e)
         {
             if(Verify()==true)
             {
-                Admin admin = new Admin(etVerificationKey.Text, etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                Admin admin = new Admin(etVerificationKey.Text, etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodePassword(etPassword.Text), Convert.ToInt16(etAge.Text));
                 Login login = new Login(etEmail.Text, etPassword.Text, "Admin");
-                UserToAdd(admin, login, "Admins");
+                UserToAdd(admin, login, etEmail.Text, "Admins");
             }
         }
         private void AddUser_Click(object sender, EventArgs e)
         {
             if (Verify() == true)
             {
-                User user = new User(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodeServerName(etPassword.Text), Convert.ToInt16(etAge.Text));
+                User user = new User(etFirstName.Text, etLastName.Text, etEmail.Text, etPassword.Text = encryption.EncodePassword(etPassword.Text), Convert.ToInt16(etAge.Text));
                 Login login = new Login(etEmail.Text, etPassword.Text, "User");
-                UserToAdd(user, login, "Users");
+                UserToAdd(user, login, etEmail.Text, "Users");
             }
         }
     }

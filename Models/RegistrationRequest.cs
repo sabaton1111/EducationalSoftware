@@ -15,25 +15,22 @@ namespace EducationalSoftware.Models
     public class RegistrationRequest
     {
         private string requestString;
-        private string token;
+        private string token; //User type to register
 
         public string RequestString { get; set; }
         public string Token { get; set; }
 
+        #region Constructors
+        //Constructor with parameters
         public RegistrationRequest(string requestString, string token)
         {
             RequestString = requestString;
             Token = token;
         }
-
-        public RegistrationRequest() : this("Empty", "Empty")
-        {
-
-        }
-
-        public RegistrationRequest(RegistrationRequest request) : this(request.requestString, request.token)
-        {
-
-        }
+        //Default constructor
+        public RegistrationRequest() : this("Empty", "Empty") { }
+        //Copy constructor
+        public RegistrationRequest(RegistrationRequest request) : this(request.requestString, request.token) { } 
+        #endregion
     }
 }

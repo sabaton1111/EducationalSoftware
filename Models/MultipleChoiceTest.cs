@@ -15,7 +15,7 @@ namespace EducationalSoftware.Models
     public class MultipleChoiceTest
     {
         #region Data members
-    //    private ImageView imgView;
+        //private ImageView imgView;
         private string userCreatedTest;
         private int numberOfQuestions;
         private string testName;
@@ -24,7 +24,7 @@ namespace EducationalSoftware.Models
         #endregion
 
         #region Properties
-      //  public ImageView ImgView { get; set; }
+        //public ImageView ImgView { get; set; }
         public string UserCreatedTest { get; set; }
         public int NumberOfQuestions { get; set; }
         public string TestName { get; set; }
@@ -43,17 +43,13 @@ namespace EducationalSoftware.Models
             TestName = testName;
             TestNotation = testNotation;
             DateCreated = DateTime.Now;
-
         }
-
         //Default constructor
         public MultipleChoiceTest() : this("Empty", 0, "Empty", "Empty") { }
-
         //Copy constructor
         public MultipleChoiceTest(MultipleChoiceTest choiceTest) : this(choiceTest.UserCreatedTest, choiceTest.NumberOfQuestions, choiceTest.TestName,
             choiceTest.TestNotation)
         { }
-
         #endregion
     }
 }

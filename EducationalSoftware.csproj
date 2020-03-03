@@ -72,7 +72,6 @@
     <Compile Include="Extensions\FirebaseRecyclerViewAdapter.cs" />
     <Compile Include="Extensions\FirebaseTests.cs" />
     <Compile Include="Extensions\PopupWindow.cs" />
-    <Compile Include="Extensions\RecyclerViewAdapter.cs" />
     <Compile Include="Extensions\SessionHelper.cs" />
     <Compile Include="Fragments\AddQuestions.cs" />
     <Compile Include="Fragments\AddTest.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="Fragments\TestFragment.cs" />
     <Compile Include="Fragments\TestsRecyclerView.cs" />
     <Compile Include="Models\Admin.cs" />
-    <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\MultipleChoiceTest.cs" />
     <Compile Include="Models\RegistrationRequest.cs" />
@@ -327,6 +325,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_view_tests.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\popup.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

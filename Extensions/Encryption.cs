@@ -5,13 +5,13 @@ namespace EducationalSoftware.Extensions
 {
     public class Encryption
     {
-        public string EncodeServerName(string serverName)
+        public string EncodePassword(string password)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(serverName));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
         }
-        public string DecodeServerName(string encodedServername)
+        public string DecodePassword(string password)
         {
-            return Encoding.UTF8.GetString(Convert.FromBase64String(encodedServername));
+            return Encoding.UTF8.GetString(Convert.FromBase64String(password));
         }
     }
 }

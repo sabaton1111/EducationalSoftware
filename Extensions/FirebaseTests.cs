@@ -38,25 +38,7 @@ namespace EducationalSoftware.Extensions
                 .Child(token)
                 .OnceAsync<T>())
                 .Select(item => item.Object).ToList();
-        }
-        public async Task<List<MultipleChoiceTest>> GetAllTests()
-        {
-            return (await client
-                .Child("Tests")
-                .OnceAsync<MultipleChoiceTest>())
-                .Select(item => new MultipleChoiceTest
-                {
-                   // ImgView = item.Object.ImgView,
-                    UserCreatedTest = item.Object.UserCreatedTest,
-                    NumberOfQuestions = item.Object.NumberOfQuestions,
-                    TestName = item.Object.TestName,
-                    TestNotation = item.Object.TestNotation,
-                    DateCreated = item.Object.DateCreated,
-
-                }).ToList();
-
-        }
-            
+        }            
         public async Task<MultipleChoiceTest> GetTest(string testName)
         {
             var allTests = await Task.Run(() => GetAll<MultipleChoiceTest>("Tests")).ConfigureAwait(continueOnCapturedContext: false);
@@ -64,21 +46,6 @@ namespace EducationalSoftware.Extensions
                 .Child("Tests")
                 .OnceAsync<MultipleChoiceTest>();
             return allTests.Where(a => a.TestName == testName).First();
-        }
-        public async Task AddTest(string userCreatedTest, int numberOfQuestions, string testName, string testNotation,
-            DateTime dateCreated)
-        {
-            await client
-                .Child("Tests")
-                .PostAsync(new MultipleChoiceTest
-                {
-                    //ImgView = imgView,
-                    UserCreatedTest = userCreatedTest,
-                    NumberOfQuestions = numberOfQuestions,
-                    TestName = testName,
-                    TestNotation = testNotation,
-                    DateCreated = dateCreated
-                });
         }
         public async Task DeleteTest(string testName)
         {

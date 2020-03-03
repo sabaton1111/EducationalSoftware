@@ -34,7 +34,7 @@ namespace EducationalSoftware.Fragments
         public async void CreateData()
         {
             //Loading data to list
-            var items =  await tests.GetAllTests().ConfigureAwait(continueOnCapturedContext: false); 
+            var items =  await tests.GetAll<MultipleChoiceTest>("Tests").ConfigureAwait(continueOnCapturedContext: false); 
             lstData = new List<MultipleChoiceTest>(items);
            var p = lstData.Count;
             Activity.RunOnUiThread(() => {

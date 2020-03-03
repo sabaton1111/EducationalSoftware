@@ -4,12 +4,16 @@ using Plugin.Messaging;
 using System.Net.Mail;
 
 using System.Net;
+using EducationalSoftware.Models;
+using Android.Views;
+using System.Collections.Generic;
 
 namespace EducationalSoftware.Extensions
 {
     public class PopupWindow
     {
         public delegate void Function();
+        public delegate void ChangePassword(EditText editText);
         private Verification.VerifyRegistration verify = new Verification.VerifyRegistration();
         private FirebaseHelper helper = new FirebaseHelper();
         private Encryption encryption = new Encryption();
@@ -44,7 +48,6 @@ namespace EducationalSoftware.Extensions
             alert.SetButton2("Cancel", (c, ev) => { });
             alert.Show();
         }
-
         public void OnForgottenPassword(string message, EditText email, Activity activity)
         {
             email = new EditText(activity);
@@ -65,7 +68,7 @@ namespace EducationalSoftware.Extensions
                         Credentials = new NetworkCredential("dimiter41@gmail.com", "sabaton1111")
                     };
                     var message = new MailMessage("dimiter41@gmail.com", "dimitar.d.velichkov@gmail.com", "Forgotten password", "Hello! It seems that you have forgotten your password. \n" + "Password:" +
-                                encryption.DecodeServerName(helper.GetLogin(email.Text).ConfigureAwait(false).GetAwaiter().GetResult().Password)
+                                encryption.DecodePassword(helper.GetData<Login>("Login",email.Text).ConfigureAwait(false).GetAwaiter().GetResult().Password)
                                 + "\n You can change your password anytime. Just go to Settings -> Change password\n" + "Have a nice day!");
 
                     // smtpClient.SendCompleted += new SendCompletedEventHandler(smtpClient_SendCompleted);
@@ -81,6 +84,39 @@ namespace EducationalSoftware.Extensions
             });
             alert.SetButton2("Cancel", (c, ev) => { });
             alert.Show();
+        }
+
+        public void OnChangePassword(ChangePassword function, EditText newPassword, EditText confirmPassword, Activity activity)
+        {
+            newPassword = new EditText(activity);
+            confirmPassword = new EditText(activity);
+            newPassword.Hint = "Enter new password";
+            confirmPassword.Hint = "Confirm password";
+            newPassword.InputType = Android.Text.InputTypes.NumberVariationPassword;
+            confirmPassword.InputType = Android.Text.InputTypes.NumberVariationPassword;
+            AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+            AlertDialog newPasswordAlert = dialog.Create();
+            newPasswordAlert.SetMessage("Change password:");
+            newPasswordAlert.SetView(newPassword);
+            newPasswordAlert.SetButton2("Cancel", (c, ev) => { });
+ 
+            newPasswordAlert.SetButton("OK", (c, ev) =>
+            {
+                AlertDialog.Builder dialogg = new AlertDialog.Builder(activity);
+                AlertDialog confirmAlert = dialogg.Create();
+                confirmAlert.SetMessage("Confirm password");
+                confirmAlert.SetView(confirmPassword);
+                confirmAlert.SetButton("OK", (c, ev) =>
+                {
+                    if(newPassword.Text == confirmPassword.Text)
+                    {
+                        function(newPassword);
+                    }
+                });
+                confirmAlert.Show();
+
+            });
+            newPasswordAlert.Show();
         }
     }
 }
