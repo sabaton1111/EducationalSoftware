@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="Text"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"
+        android:textColor="@color/colorMain"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/textViewStartTestName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtViewStartQuestion"
+        android:text="Question"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:layout_below="@id/textViewStartTestName"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background = "@drawable/button_border"
+        android:id="@+id/btnAnswerOne"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtViewStartQuestion"
+    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background = "@drawable/button_border"
+        android:id="@+id/btnAnswerTwo"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btnAnswerOne"
+    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background = "@drawable/button_border"
+        android:id="@+id/btnAnswerThree"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btnAnswerTwo"
+    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background = "@drawable/button_border"
+        android:id="@+id/btnAnswerFour"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btnAnswerThree"
+    />
+</RelativeLayout>

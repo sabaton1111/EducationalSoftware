@@ -41,7 +41,7 @@ namespace EducationalSoftware.Extensions
                     return (T)(object)allAdmins.Where(a => a.Email == email).First();
                 case "Teachers":
                     var allTeachers = await Task.Run(() => GetAllUsers<Teacher>(token)).ConfigureAwait(continueOnCapturedContext: false);
-                    return (T)(object)allTeachers.Where(a => a.Email == email);
+                    return (T)(object)allTeachers.Where(a => a.Email == email).First();
                 case "Users":
                     var allUsers = await Task.Run(() => GetAllUsers<User>(token)).ConfigureAwait(continueOnCapturedContext: false);
                     return (T)(object)allUsers.Where(a => a.Email == email).First();

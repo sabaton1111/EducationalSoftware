@@ -47,6 +47,23 @@ namespace EducationalSoftware.Extensions
                 .OnceAsync<MultipleChoiceTest>();
             return allTests.Where(a => a.TestName == testName).First();
         }
+        public async Task<TestQuestionPattern> GetQuestion(string testName)
+        {
+            var allTests = await Task.Run(() => GetAll<TestQuestionPattern>("TestQuestions")).ConfigureAwait(continueOnCapturedContext: false);
+            await client
+                .Child("TestQuestions")
+                .Child("TestName")
+                .OnceAsync<MultipleChoiceTest>();
+            return allTests.Where(a => a.TestName == testName).First();
+        }
+        public async Task<List<T>> GetAllQuestions<T>(string testName)
+        {
+            return (await client
+                .Child("TestQuestions")
+                .Child(testName)
+                .OnceAsync<T>())
+                .Select(item => item.Object).ToList();
+        }
         public async Task DeleteTest(string testName)
         {
             var toDeleteSession = (await client

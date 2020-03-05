@@ -9,7 +9,7 @@ using static EducationalSoftware.Extensions.PopupWindow;
 
 namespace EducationalSoftware
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, Icon = "@mipmap/logo")]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait, Icon = "@mipmap/logo")]
     public class MainActivity : AppCompatActivity//, NavigationView.IOnNavigationItemSelectedListener
     {
         private Function function = null;

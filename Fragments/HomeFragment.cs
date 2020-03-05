@@ -60,7 +60,7 @@ namespace EducationalSoftware.Fragments
                 switch (e.Item.ItemId)
                 {
                     case Resource.Id.action_home:
-                        selectedFragment = new TestsRecyclerView();
+                        selectedFragment = new TestsRecyclerView(EmailAddress, Token);
                         Toast.MakeText(Activity, "Home clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_statistics:

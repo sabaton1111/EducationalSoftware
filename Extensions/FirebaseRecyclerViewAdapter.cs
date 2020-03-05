@@ -5,32 +5,36 @@ using Android.Support.V7.Widget;
 using System.Collections.Generic;
 using EducationalSoftware.Models;
 using System.Globalization;
+using EducationalSoftware.Fragments;
+using Android.App;
 
 namespace EducationalSoftware.Extensions
 {
-    class FirebaseRecyclerViewAdapter : RecyclerView.Adapter
+    public class FirebaseRecyclerViewAdapter : RecyclerView.Adapter
     {
         public event EventHandler<FirebaseRecyclerViewAdapterClickEventArgs> ItemClick;
         public event EventHandler<FirebaseRecyclerViewAdapterClickEventArgs> ItemLongClick;
+        public event EventHandler<FirebaseRecyclerViewAdapterClickEventArgs> ButtonClick;
         List<MultipleChoiceTest> Items;
-
-        public FirebaseRecyclerViewAdapter(List<MultipleChoiceTest> Data)
+        private FragmentManager fm;
+        public FirebaseRecyclerViewAdapter(List<MultipleChoiceTest> Data, FragmentManager fm)
         {
             Items = Data;
+            this.fm = fm;
         }
         // Create new view
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-
             //Layout setup
             View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.card_view, parent, false);
             var vh = new FirebaseRecyclerViewAdapterViewHolder(itemView, OnClick, OnLongClick);
+
             return vh;
         }
         // Replace the contents of a view (invoked by the layout manager)
         public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
         {
-            var item = Items[position]; 
+            var item = Items[position];
 
             // Replace the contents of the view with that element
             var holder = viewHolder as FirebaseRecyclerViewAdapterViewHolder;
@@ -43,14 +47,18 @@ namespace EducationalSoftware.Extensions
             //On button click
             holder.BtnStartTest.Click += (o, e) =>
             {
-                Toast.MakeText(Android.App.Application.Context,holder.TxtTestName.Text, ToastLength.Short).Show();
+                //TODO: Create fragment to load 
+                OnButtonClick(new FirebaseRecyclerViewAdapterClickEventArgs(holder.TxtTestName.Text));
+                Toast.MakeText(Android.App.Application.Context, holder.TxtTestName.Text, ToastLength.Short).Show();
             };
         }
+
         public override int ItemCount => Items.Count;
+
+        void OnButtonClick(FirebaseRecyclerViewAdapterClickEventArgs args) => ButtonClick?.Invoke(this, args);
         void OnClick(FirebaseRecyclerViewAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
         void OnLongClick(FirebaseRecyclerViewAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
     }
-
     public class FirebaseRecyclerViewAdapterViewHolder : RecyclerView.ViewHolder
     {
         //public ImageView ImgView { get; set; }
@@ -71,14 +79,17 @@ namespace EducationalSoftware.Extensions
             TxtNotation = itemView.FindViewById<TextView>(Resource.Id.txtViewCardTestNotation);
             TxtUserName = itemView.FindViewById<TextView>(Resource.Id.txtViewCardUser);
             BtnStartTest = itemView.FindViewById<Button>(Resource.Id.btnCardStartTest);
-
-            itemView.Click += (sender, e) => clickListener(new FirebaseRecyclerViewAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
-            itemView.LongClick += (sender, e) => longClickListener(new FirebaseRecyclerViewAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
         }
     }
     public class FirebaseRecyclerViewAdapterClickEventArgs : EventArgs
     {
         public View View { get; set; }
         public int Position { get; set; }
+        public string TestName { get; set; }
+
+        public FirebaseRecyclerViewAdapterClickEventArgs(string testName)
+        {
+            TestName = testName;
+        }
     }
 }

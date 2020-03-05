@@ -42,47 +42,85 @@
     <EditText
         android:layout_below="@+id/editTextQuestion"
         android:backgroundTint="@color/colorMain"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="30dp"
         android:hint="Answer 1"
         android:textAlignment="center"
         android:id="@id/editTextAnswerOne"/>
     <EditText
         android:layout_below="@+id/editTextAnswerOne"
         android:backgroundTint="@color/colorMain"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Answer 1"
+        android:layout_marginRight="30dp"
+        android:hint="Answer 2"
         android:textAlignment="center"
         android:id="@id/editTextAnswerTwo"/>
     <EditText
         android:layout_below="@+id/editTextAnswerTwo"
         android:backgroundTint="@color/colorMain"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Answer 1"
+        android:layout_marginRight="30dp"
+        android:hint="Answer 3"
         android:textAlignment="center"
         android:id="@id/editTextAnswerThree"/>
     <EditText
         android:layout_below="@+id/editTextAnswerThree"
         android:backgroundTint="@color/colorMain"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Answer 1"
+        android:layout_marginRight="30dp"
+        android:hint="Answer 4"
         android:textAlignment="center"
         android:id="@id/editTextAnswerFour"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:gravity = "end"
+        android:orientation="vertical"
+        android:id="@+id/radioGroupRegCorrectAnswer"
+        android:layout_below="@id/editTextQuestion">
+        <RadioButton
+            android:gravity="end"
+            android:checked="true"
+            android:buttonTint="@color/colorMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnAnswerOne"       
+        />
+        <RadioButton
+            android:gravity="end"
+            android:layout_marginTop="10dp"
+            android:buttonTint="@color/colorMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnAnswerTwo"/>
+        <RadioButton
+            android:gravity="end"
+            android:layout_marginTop="12dp"
+            android:buttonTint="@color/colorMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnAnswerThree"/>
+        <RadioButton
+            android:gravity="end"
+            android:layout_marginTop="10dp"
+            android:buttonTint="@color/colorMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnAnswerFour"/>
+    </RadioGroup>
     <Button
         android:text="@string/add_question"
         android:layout_width="match_parent"

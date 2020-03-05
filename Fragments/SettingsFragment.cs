@@ -100,14 +100,16 @@ namespace EducationalSoftware.Fragments
             login.Password = encryption.EncodePassword(newPass.Text);
             await firebaseHelper.UpdatePassword<Login>(login, "Login", EmailAddress);
         }
-        private async void OnChangePassword(object sender, EventArgs e)
+        private void OnChangePassword(object sender, EventArgs e)
         {
+            //TODO: Validate password
             changePassword += new ChangePassword(ChangePassword);
             alertWindow.OnChangePassword(changePassword, newPass, confirm, Activity);
         }
 
         public async void DeleteAccount()
         {
+            //TODO: Change popup
             switch (Token)
             {
                 case "Admin":
@@ -141,6 +143,7 @@ namespace EducationalSoftware.Fragments
         {
             await session.DeleteSession(EmailAddress);
             LoginFragment login = new LoginFragment();
+            FragmentManager.PopBackStack();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, login).Commit();
             alertWindow.Alert("", "Logout successful!", Activity);
         }
