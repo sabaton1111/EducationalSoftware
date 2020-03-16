@@ -1,7 +1,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+   android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
@@ -59,6 +59,30 @@
                 android:textColor="@color/colorMain"
                 android:layout_below="@+id/editTextQuestionNumber"
                 android:id="@+id/btnAddQuestions"/>
+      <ImageView
+                android:layout_below="@+id/btnAddQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/imgViewCreateTest"
+            />
+            <Button
+                android:layout_below="@id/imgViewCreateTest"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Choose"
+                android:layout_weight="0.5"
+                android:id="@+id/btnAddTestChoosePhoto"/>
+            <Button
+                android:layout_below="@+id/btnAddTestChoosePhoto"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Upload"
+                android:id="@+id/btnAddTestUploadPhoto"/>
+            
         </RelativeLayout>
+
     </ScrollView>
 </RelativeLayout>

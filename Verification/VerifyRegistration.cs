@@ -47,7 +47,8 @@ namespace EducationalSoftware.Verification
             }
             catch
             {
-                          }
+
+            }
             //Validating email
             try
             {

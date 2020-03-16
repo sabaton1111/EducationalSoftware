@@ -1,20 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:gravity = "center"
     android:layout_height="wrap_content"
-    android:id="@+id/popupView"
-  >
-    <EditText
+    >
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:id = "@+id/etNewPass"
-    />
-    <EditText
-        android:layout_below="@+id/etNewPass"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:id = "@+id/etConfirmPass"
-    />
-</RelativeLayout>
+        android:layout_height="250dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/popupbackground"
+        android:id="@+id/layotID">
+
+        <TextView
+            android:id="@+id/allocate_collector"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="Forgot password? "
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etEmailForgotPassword"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="60dp"
+            android:hint="@string/email"
+            android:layout_below="@+id/allocate_collector"
+            android:textAlignment="center"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etEmailForgotPassword"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_below="@+id/allocate_collector"
+                android:id="@+id/btnOk"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_border"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:layout_weight="0.5"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="12dp"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_below="@+id/allocate_collector"
+                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:text="Cancel"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/button_border"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

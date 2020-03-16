@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -14,7 +14,7 @@ using EducationalSoftware.Models;
 
 namespace EducationalSoftware.Fragments
 {
-    public class TestFragment : Fragment
+    public class TestFragment : Android.Support.V4.App.Fragment
     {
         public event EventHandler<ButtonClickEventArgs> ButtonClick;
         List<TestQuestionPattern> lst;
@@ -50,44 +50,46 @@ namespace EducationalSoftware.Fragments
             txtTestName = view.FindViewById<TextView>(Resource.Id.textViewStartTestName);
             txtQuestion = view.FindViewById<TextView>(Resource.Id.txtViewStartQuestion);
             GetData();
-            Toast.MakeText(Android.App.Application.Context, TestName, ToastLength.Short).Show();
+            //Toast.MakeText(Android.App.Application.Context, TestName, ToastLength.Short).Show();
             return view;
         }
 
         private async void GetData()
         {
-
             var items = await tests.GetAllQuestions<TestQuestionPattern>(TestName).ConfigureAwait(continueOnCapturedContext: false);
             lst = new List<TestQuestionPattern>(items);
             var shuffled = lst.OrderBy(a => Guid.NewGuid()).ToList();
             TestFunction(shuffled);
-
+           
         }
 
         private void TestFunction(List<TestQuestionPattern> shuffled)
         {
-            Activity.RunOnUiThread(() =>
-            {
-                txtTestName.Text = TestName;
-                txtQuestion.Text = shuffled.First().Question;
-                btnAnswerOne.Text = shuffled.First().Answers[0];
-                btnAnswerTwo.Text = shuffled.First().Answers[1];
-                btnAnswerThree.Text = shuffled.First().Answers[2];
-                btnAnswerFour.Text = shuffled.First().Answers[3];
-            });
-            btnAnswerOne.Click += (o, e) =>
+
+            txtTestName.Text = TestName;
+            txtQuestion.Text = shuffled.First().Question;
+            btnAnswerOne.Text = shuffled.First().Answers[0];
+            btnAnswerTwo.Text = shuffled.First().Answers[1];
+            btnAnswerThree.Text = shuffled.First().Answers[2];
+            btnAnswerFour.Text = shuffled.First().Answers[3];
+
+            btnAnswerOne.Click -= delegate { };
+            btnAnswerOne.Click += delegate
             {
                 OnButtonClick(new ButtonClickEventArgs(btnAnswerOne, shuffled));
             };
-            btnAnswerTwo.Click += (o, e) =>
+            btnAnswerTwo.Click -= delegate { };
+            btnAnswerTwo.Click += delegate
             {
                 OnButtonClick(new ButtonClickEventArgs(btnAnswerTwo, shuffled));
             };
-            btnAnswerThree.Click += (o, e) =>
+            btnAnswerThree.Click -= delegate { };
+            btnAnswerThree.Click += delegate
             {
                 OnButtonClick(new ButtonClickEventArgs(btnAnswerThree, shuffled));
             };
-            btnAnswerFour.Click += (o, e) =>
+            btnAnswerFour.Click -= delegate { };
+            btnAnswerFour.Click += delegate
             {
                 OnButtonClick(new ButtonClickEventArgs(btnAnswerFour, shuffled));
             };
@@ -100,31 +102,28 @@ namespace EducationalSoftware.Fragments
                 if (buttonClickEventArgs.ButtonClicked.Text == buttonClickEventArgs.Lst.First().CorrectAnswer)
                 {
                     Toast.MakeText(Android.App.Application.Context, "Correct", ToastLength.Short).Show();
+                    buttonClickEventArgs.Lst.RemoveAt(0);
+
+                    TestFunction(buttonClickEventArgs.Lst);
                 }
                 else
                 {
                     Toast.MakeText(Android.App.Application.Context, "Incorrect", ToastLength.Short).Show();
-                }
-            }
-            catch {  }
-            try
-            {
-                buttonClickEventArgs.Lst.RemoveAt(0);
-                if (buttonClickEventArgs.Lst.Count != 0)
-                {
+                    buttonClickEventArgs.Lst.RemoveAt(0);
+
                     TestFunction(buttonClickEventArgs.Lst);
                 }
             }
             catch
             {
-                Activity.RunOnUiThread(() =>
-                {
-                    Toast.MakeText(Android.App.Application.Context, "Finished", ToastLength.Short).Show();
-                });
+                //TODO: Email address is empty
                 FragmentManager.PopBackStack();
-                HomeFragment fragment = new HomeFragment(EmailAddress, Token);
-                FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, fragment).AddToBackStack(null).Commit();
+                Android.Support.V4.App.Fragment fragment = new HomeFragment(EmailAddress, Token);
+                FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, fragment).Commit();
+
+                return;
             }
+
         }
     }
     public class ButtonClickEventArgs : EventArgs

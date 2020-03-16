@@ -10,7 +10,7 @@ using System.Text;
 using EducationalSoftware.Models;
 namespace EducationalSoftware.Fragments
 {
-    public class RegisterFragment : Fragment
+    public class RegisterFragment : Android.Support.V4.App.Fragment
     {
         #region Data members
 
@@ -230,7 +230,7 @@ namespace EducationalSoftware.Fragments
             await firebaseHelper.AddToFirebase(userType, token);
             await firebaseHelper.AddToFirebase(login, "Login");
             alertWindow.Alert("Message", "Successful registration", Activity);
-            Fragment loginFragment = new LoginFragment();
+            Android.Support.V4.App.Fragment loginFragment = new LoginFragment();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
         }
         private void BtnUStudentRegister_Click(object sender, EventArgs e)

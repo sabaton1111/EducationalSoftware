@@ -5,21 +5,26 @@
     android:id="@+id/layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-
+    <android.support.v7.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:id="@+id/search"/>
 
     <android.support.design.widget.BottomNavigationView
+        android:outlineSpotShadowColor="@color/colorWhite"
+        android:layout_below="@+id/search"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorMain"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor= "@drawable/nav_item_color_state"
+        android:background="@color/colorWhite"
+        app:itemIconTint="@color/colorMain"
+        app:itemTextColor= "@color/colorMain"
         app:menu="@menu/bottom_navigation_main">
     </android.support.design.widget.BottomNavigationView>
     <RelativeLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"/>
+        android:layout_below="@id/bottom_navigation"/>
 </RelativeLayout>

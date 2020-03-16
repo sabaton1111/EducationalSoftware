@@ -8,7 +8,7 @@ using EducationalSoftware.Models;
 
 namespace EducationalSoftware.Fragments
 {
-    public class RegistrationTypeFragment : Fragment
+    public class RegistrationTypeFragment : Android.Support.V4.App.Fragment
     {
         #region Data members
 
@@ -84,7 +84,7 @@ namespace EducationalSoftware.Fragments
                 await firebaseHelper.AddToFirebase<RegistrationRequest>(request, "Request");
             }
             //Loading registration form
-            Fragment registerOtherFragment = new RegisterFragment();
+            Android.Support.V4.App.Fragment registerOtherFragment = new RegisterFragment();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, registerOtherFragment).AddToBackStack(null).Commit();
         }
     }

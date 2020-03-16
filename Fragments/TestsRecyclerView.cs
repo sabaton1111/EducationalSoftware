@@ -8,13 +8,17 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
+using Android.Text;
 using Android.Views;
 using Android.Widget;
 using EducationalSoftware.Extensions;
 using EducationalSoftware.Models;
+using Firebase;
+using Firebase.Storage;
+
 namespace EducationalSoftware.Fragments
 {
-    public class TestsRecyclerView : Fragment
+    public class TestsRecyclerView : Android.Support.V4.App.Fragment
     {
         #region HomeFragment datamembers
         private string emailAddress;
@@ -36,43 +40,79 @@ namespace EducationalSoftware.Fragments
         public TestsRecyclerView(HomeFragment fragment) : this(fragment.EmailAddress, fragment.Token) { }
         #endregion
         private RecyclerView recyclerView;
-        List<MultipleChoiceTest> lstData;
+        private List<MultipleChoiceTest> lstData;
+        private FirebaseRecyclerViewAdapter adapter;
         private FirebaseTests tests = new FirebaseTests();
+        private EditText etSearch;
+        private Button btnSearch;
         private FragmentManager fm;
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            var items = tests.GetAll<MultipleChoiceTest>("Tests").ConfigureAwait(continueOnCapturedContext: false);
+
 
             View view = inflater.Inflate(Resource.Layout.fragment_view_tests, container, false);
+            FirebaseApp.InitializeApp(Activity);
+            etSearch = view.FindViewById<EditText>(Resource.Id.searchView);
+            btnSearch = view.FindViewById<Button>(Resource.Id.buttonSearch);
             recyclerView = view.FindViewById<RecyclerView>(Resource.Id.recyclerViewTests);
 
             CreateData();
+            btnSearch.Click += OnSearch;
             return view;
         }
+
+        private void OnSearch(object sender, EventArgs e)
+        {
+            SearchResultsFragment searchResults = new SearchResultsFragment(etSearch.Text);
+            FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment,searchResults).AddToBackStack(null).Commit();
+
+            //var items = await tests.GetAll<MultipleChoiceTest>("Tests").ConfigureAwait(continueOnCapturedContext: false);
+            //lstData = new List<MultipleChoiceTest>();
+
+            //foreach (var item in items)
+            //{
+            //    if(item.TestName.Contains(etSearch.Text))
+            //    {
+            //        lstData.Add(item);
+            //    }
+            //}
+            //Activity.RunOnUiThread(() =>
+            //{
+            //    //Setting up the adapter
+            //    recyclerView.SetLayoutManager(new LinearLayoutManager(recyclerView.Context));
+            //    adapter = new FirebaseRecyclerViewAdapter(lstData, fm);
+            //    recyclerView.SetAdapter(adapter);
+            //    adapter.ButtonClick += Details;
+            //});
+        }
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
         }
+
         public async void CreateData()
         {
-
             //Loading data to list
             var items = await tests.GetAll<MultipleChoiceTest>("Tests").ConfigureAwait(continueOnCapturedContext: false);
             lstData = new List<MultipleChoiceTest>(items);
-            var p = lstData.Count;
             Activity.RunOnUiThread(() =>
-            {
-                //Setting up the adapter
-                recyclerView.SetLayoutManager(new LinearLayoutManager(recyclerView.Context));
-                FirebaseRecyclerViewAdapter adapter = new FirebaseRecyclerViewAdapter(lstData, fm);
-                recyclerView.SetAdapter(adapter);
-                adapter.ButtonClick += Details;
-            });
+             {
+                 //Setting up the adapter
+                 recyclerView.SetLayoutManager(new LinearLayoutManager(recyclerView.Context));
+                 adapter = new FirebaseRecyclerViewAdapter(lstData, fm);
+                 
+                 recyclerView.SetAdapter(adapter);
+                 adapter.ButtonClick += Details;
+             });
         }
 
         private void Details(object sender, FirebaseRecyclerViewAdapterClickEventArgs e)
         {
             TestFragment fragment = new TestFragment(e.TestName, EmailAddress, Token);
-            FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, fragment).AddToBackStack(null).Commit();
+            FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, fragment).Commit();
         }
+        
     }
 }

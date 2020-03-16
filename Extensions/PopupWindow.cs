@@ -65,10 +65,10 @@ namespace EducationalSoftware.Extensions
                         EnableSsl = true,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential("dimiter41@gmail.com", "sabaton1111")
+                        Credentials = new NetworkCredential("educational.software.help@gmail.com", "educationalSoftware")
                     };
-                    var message = new MailMessage("dimiter41@gmail.com", "dimitar.d.velichkov@gmail.com", "Forgotten password", "Hello! It seems that you have forgotten your password. \n" + "Password:" +
-                                encryption.DecodePassword(helper.GetData<Login>("Login",email.Text).ConfigureAwait(false).GetAwaiter().GetResult().Password)
+                    var message = new MailMessage("educational.software.help@gmail.com", email.Text, "Forgotten password", "Hello! It seems that you have forgotten your password. \n" + "Password:" +
+                                encryption.DecodePassword(helper.GetLogin(email.Text).ConfigureAwait(false).GetAwaiter().GetResult().Password)
                                 + "\n You can change your password anytime. Just go to Settings -> Change password\n" + "Have a nice day!");
 
                     // smtpClient.SendCompleted += new SendCompletedEventHandler(smtpClient_SendCompleted);

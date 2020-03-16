@@ -10,7 +10,7 @@ using EducationalSoftware.Models;
 
 namespace EducationalSoftware.Fragments
 {
-    public class SettingsFragment : Fragment
+    public class SettingsFragment : Android.Support.V4.App.Fragment
     {
         private EditText newPass, confirm;
         private Function function = null;
@@ -131,7 +131,7 @@ namespace EducationalSoftware.Fragments
             await session.DeleteSession(EmailAddress);
             await firebaseHelper.DeleteAccount<Login>("Login", EmailAddress);
             alertWindow.Alert("", "Account deleted!", Activity);
-            Fragment loginFragment = new LoginFragment();
+            Android.Support.V4.App.Fragment loginFragment = new LoginFragment();
             FragmentManager.BeginTransaction().Replace(Resource.Id.parent_fragment, loginFragment).Commit();
         }
         private void OnDeleteAccount(object sender, EventArgs e)

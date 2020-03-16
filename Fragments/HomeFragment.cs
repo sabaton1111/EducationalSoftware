@@ -9,7 +9,7 @@ using EducationalSoftware.Models;
 
 namespace EducationalSoftware.Fragments
 {
-    public class HomeFragment : Fragment
+    public class HomeFragment : Android.Support.V4.App.Fragment
     {
         #region HomeFragment datamembers
         private string emailAddress;
@@ -37,7 +37,6 @@ namespace EducationalSoftware.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = inflater.Inflate(Resource.Layout.fragment_home, container, false);
-            GetToken();
             bottomNavigation = view.FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             if (Token == "Teacher")
             {
@@ -47,7 +46,7 @@ namespace EducationalSoftware.Fragments
             {
                 LoadNavigation();
             }
-            Fragment fragment = new TestsRecyclerView();
+            Android.Support.V4.App.Fragment fragment = new TestsRecyclerView(EmailAddress, Token);
             FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, fragment).Commit();
 
             return view;
@@ -56,7 +55,7 @@ namespace EducationalSoftware.Fragments
         {
             bottomNavigation.NavigationItemSelected += (s, e) =>
             {
-                Fragment selectedFragment = null;
+                Android.Support.V4.App.Fragment selectedFragment = null;
                 switch (e.Item.ItemId)
                 {
                     case Resource.Id.action_home:
@@ -64,7 +63,7 @@ namespace EducationalSoftware.Fragments
                         Toast.MakeText(Activity, "Home clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_statistics:
-                        selectedFragment = new LoginFragment();
+                        selectedFragment = new MyProfile(EmailAddress,Token);
                         Toast.MakeText(Activity, "Stats clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_test:
@@ -72,7 +71,7 @@ namespace EducationalSoftware.Fragments
                         Toast.MakeText(Activity, "Test clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_messages:
-                        selectedFragment = new Fragment();
+                        selectedFragment = new Android.Support.V4.App.Fragment();
                         Toast.MakeText(Activity, "Msg clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_settings:
@@ -98,19 +97,19 @@ namespace EducationalSoftware.Fragments
             bottomNavigation.Menu.SetGroupEnabled(1, true);
             bottomNavigation.NavigationItemSelected += (s, e) =>
             {
-                Fragment selectedFragment = null;
+                Android.Support.V4.App.Fragment selectedFragment = null;
                 switch (e.Item.ItemId)
                 {
                     case Resource.Id.action_home:
-                        selectedFragment = new Fragment();
+                        selectedFragment = new TestsRecyclerView(EmailAddress, Token);
                         Toast.MakeText(Activity, "Home clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_statistics:
-                        selectedFragment = new LoginFragment();
+                        selectedFragment = new MyProfile(EmailAddress, Token);
                         Toast.MakeText(Activity, "Stats clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_messages:
-                        selectedFragment = new Fragment();
+                        selectedFragment = new Android.Support.V4.App.Fragment();
                         Toast.MakeText(Activity, "Msg clicked", ToastLength.Short).Show();
                         break;
                     case Resource.Id.action_settings:
@@ -120,34 +119,6 @@ namespace EducationalSoftware.Fragments
                 }
                 FragmentManager.BeginTransaction().Replace(Resource.Id.fragment_container, selectedFragment).Commit();
             };
-        }
-        private void GetToken()
-        {
-            try
-            {
-                if (Token == "User")
-                {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetData<User>("Users", EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
-                }
-                else if (Token == "Admin")
-                {
-                    alertWindow.Alert(EmailAddress, firebaseHelper.GetData<Admin>("Admins", EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
-                }
-                else if (Token == "Teacher")
-                {
-                   // alertWindow.Alert(EmailAddress, firebaseHelper.GetTeacher(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
-                }
-                else if (Token == "UniversityStudent")
-                {
-                  //  alertWindow.Alert(EmailAddress, firebaseHelper.GetUniversityStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
-                }
-                else
-                {
-                   // alertWindow.Alert(EmailAddress, firebaseHelper.GetSchoolStudent(EmailAddress).ConfigureAwait(false).GetAwaiter().GetResult().LastName, Activity);
-                }
-            }
-            catch { }
-
         }
     }
 }
